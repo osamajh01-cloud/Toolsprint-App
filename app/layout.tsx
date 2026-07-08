@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { siteConfig } from "@/config/site";
+import { ThemeScript } from "@/components/layout/ThemeScript";
 import "./globals.css";
 
 /**
@@ -88,6 +89,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      {/*
+        ThemeScript runs before paint and may add `.dark` to <html>, which
+        the server can't predict — hence suppressHydrationWarning above.
+      */}
+      <head>
+        <ThemeScript />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground`}
       >

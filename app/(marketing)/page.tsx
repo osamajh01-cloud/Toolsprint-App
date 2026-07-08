@@ -13,9 +13,7 @@ import { Hero } from "@/components/marketing/Hero";
  * catalog exists.
  */
 export default function HomePage() {
-  return (
-    <main>
-      <Hero />
-    </main>
-  );
+  // No <main> wrapper here: the (marketing) layout's SiteShell already
+  // renders <main id="main-content"> — nesting another would be invalid HTML.
+  return <Hero />;
 }

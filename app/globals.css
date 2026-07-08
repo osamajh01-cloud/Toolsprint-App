@@ -3,13 +3,19 @@
 /**
  * globals.css
  *
- * Tailwind CSS v4 uses a CSS-first configuration model: design tokens are
- * declared here as CSS custom properties and exposed to Tailwind's utility
- * generator via the `@theme` block below, instead of a tailwind.config.ts
- * `theme.extend` object. This keeps a single source of truth for colors,
- * fonts, etc. Future milestones (dashboard, dark mode, branding) should
- * extend the tokens here rather than hardcoding hex values in components.
+ * Tailwind CSS v4 CSS-first configuration. Design tokens are CSS custom
+ * properties exposed to Tailwind's utility generator via `@theme`.
+ *
+ * DARK MODE STRATEGY (Milestone 2):
+ * Dark mode is class-based (`.dark` on <html>), not media-query-based,
+ * because the header has a user-facing theme toggle. The user's choice is
+ * persisted to localStorage and applied before first paint by an inline
+ * script in app/layout.tsx (see ThemeScript) to avoid a flash of the
+ * wrong theme. The `@custom-variant` below makes Tailwind's `dark:`
+ * utilities follow the class instead of `prefers-color-scheme`.
  */
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --background: #ffffff;
@@ -23,6 +29,24 @@
   --muted-foreground: #6b7280;
 
   --border: #e4e4e7;
+
+  /* Translucent surface for the sticky header (glass effect). */
+  --header: rgba(255, 255, 255, 0.8);
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+
+  --brand: #818cf8;
+  --brand-foreground: #0a0a0a;
+
+  --muted: #18181b;
+  --muted-foreground: #a1a1aa;
+
+  --border: #27272a;
+
+  --header: rgba(10, 10, 10, 0.8);
 }
 
 @theme inline {
@@ -33,26 +57,22 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
+  --color-header: var(--header);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-
-    --brand: #818cf8;
-    --brand-foreground: #0a0a0a;
-
-    --muted: #18181b;
-    --muted-foreground: #a1a1aa;
-
-    --border: #27272a;
-  }
-}
-
 body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Smooth color transition when toggling theme, disabled for users who
+   prefer reduced motion (accessibility quality floor). */
+@media (prefers-reduced-motion: no-preference) {
+  body,
+  header,
+  footer {
+    transition: background-color 150ms ease, border-color 150ms ease;
+  }
 }
