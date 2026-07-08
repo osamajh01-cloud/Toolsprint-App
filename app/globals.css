@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+/**
+ * globals.css
+ *
+ * Tailwind CSS v4 uses a CSS-first configuration model: design tokens are
+ * declared here as CSS custom properties and exposed to Tailwind's utility
+ * generator via the `@theme` block below, instead of a tailwind.config.ts
+ * `theme.extend` object. This keeps a single source of truth for colors,
+ * fonts, etc. Future milestones (dashboard, dark mode, branding) should
+ * extend the tokens here rather than hardcoding hex values in components.
+ */
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* Brand accent, used for CTAs, links, and highlighted UI. */
+  --brand: #4f46e5;
+  --brand-foreground: #ffffff;
+
+  --muted: #f4f4f5;
+  --muted-foreground: #6b7280;
+
+  --border: #e4e4e7;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+
+    --brand: #818cf8;
+    --brand-foreground: #0a0a0a;
+
+    --muted: #18181b;
+    --muted-foreground: #a1a1aa;
+
+    --border: #27272a;
+  }
+}
+
+body {
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
