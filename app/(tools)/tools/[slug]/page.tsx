@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { ToolCard } from "@/components/shared/ToolCard";
 import { ToolShell } from "@/components/tools/ToolShell";
+import { getToolImplementation } from "@/components/tools/implementations";
+import { jsonLdString, toolJsonLd } from "@/lib/seo";
 import {
   getCategory,
   getToolBySlug,
@@ -64,9 +66,19 @@ export default async function ToolPage({ params }: ToolPageProps) {
     .filter((other) => other.slug !== tool.slug)
     .slice(0, 3);
 
+  // Interactive UI for this tool, if implemented (see implementations.ts).
+  // Undefined → ToolShell renders its launch-notice fallback.
+  const ToolUi = getToolImplementation(tool.slug);
+
   return (
     <Container className="py-10 sm:py-14">
-      <ToolShell tool={tool} />
+      {/* schema.org SoftwareApplication — registry-driven, on every tool page */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(toolJsonLd(tool)) }}
+      />
+
+      <ToolShell tool={tool}>{ToolUi ? <ToolUi /> : undefined}</ToolShell>
 
       {/* Internal linking within the category */}
       {related.length > 0 && category && (
