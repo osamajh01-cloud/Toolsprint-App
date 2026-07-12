@@ -39,6 +39,26 @@ export function toolJsonLd(tool: Tool) {
 }
 
 /**
+ * schema.org BreadcrumbList markup mirroring the visible breadcrumb trail
+ * (Home / Tools / Category / Tool). The last item is the current page and
+ * carries no URL, per Google's structured-data guidance.
+ */
+export function breadcrumbJsonLd(
+  items: { name: string; url?: string }[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      ...(item.url ? { item: item.url } : {}),
+    })),
+  };
+}
+
+/**
  * Serialize JSON-LD for a <script type="application/ld+json"> tag.
  * "<" is escaped so payload content can never close the script tag
  * early (standard XSS hardening for inline JSON).

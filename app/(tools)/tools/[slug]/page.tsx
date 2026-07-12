@@ -5,7 +5,8 @@ import { Container } from "@/components/ui/Container";
 import { ToolCard } from "@/components/shared/ToolCard";
 import { ToolShell } from "@/components/tools/ToolShell";
 import { getToolImplementation } from "@/components/tools/implementations";
-import { jsonLdString, toolJsonLd } from "@/lib/seo";
+import { breadcrumbJsonLd, jsonLdString, toolJsonLd } from "@/lib/seo";
+import { siteConfig } from "@/config/site";
 import {
   getCategory,
   getToolBySlug,
@@ -46,10 +47,19 @@ export async function generateMetadata({
   const tool = getToolBySlug(slug);
   if (!tool) return {};
 
+  const canonical = `${siteConfig.url}/tools/${tool.slug}`;
+
   return {
     title: tool.seoTitle,
     description: tool.seoDescription,
+    alternates: { canonical },
     openGraph: {
+      title: tool.seoTitle,
+      description: tool.seoDescription,
+      url: canonical,
+    },
+    twitter: {
+      card: "summary_large_image",
       title: tool.seoTitle,
       description: tool.seoDescription,
     },
@@ -76,6 +86,27 @@ export default async function ToolPage({ params }: ToolPageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(toolJsonLd(tool)) }}
+      />
+      {/* schema.org BreadcrumbList — mirrors ToolShell's visible trail */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdString(
+            breadcrumbJsonLd([
+              { name: "Home", url: siteConfig.url },
+              { name: "Tools", url: `${siteConfig.url}/tools` },
+              ...(category
+                ? [
+                    {
+                      name: category.title,
+                      url: `${siteConfig.url}/tools/category/${category.slug}`,
+                    },
+                  ]
+                : []),
+              { name: tool.title },
+            ]),
+          ),
+        }}
       />
 
       <ToolShell tool={tool}>{ToolUi ? <ToolUi /> : undefined}</ToolShell>

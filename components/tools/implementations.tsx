@@ -6,24 +6,26 @@ import { CaseConverter } from "@/components/tools/case-converter/CaseConverter";
 import { Base64Tool } from "@/components/tools/base64-encoder/Base64Tool";
 import { TextReverser } from "@/components/tools/text-reverser/TextReverser";
 import { RemoveDuplicateLines } from "@/components/tools/remove-duplicate-lines/RemoveDuplicateLines";
+import { QrCodeGeneratorLazy } from "@/components/tools/qr-code-generator/QrCodeGeneratorLazy";
 
 /**
- * components/tools/implementations.ts
+ * components/tools/implementations.tsx
  *
- * Maps registry slugs to their interactive tool components. This is the
- * single join point between "a tool exists" (registry) and "a tool works"
- * (component):
+ * Maps registry slugs to their interactive tool components — the single
+ * join point between "a tool exists" (registry) and "a tool works"
+ * (component). Slug present → /tools/[slug] renders the component in
+ * ToolShell's body slot; absent → the launch-notice fallback.
  *
- * - Slug present here  → /tools/[slug] renders the component inside
- *   ToolShell's body slot.
- * - Slug absent        → ToolShell renders its launch-notice fallback.
+ * BUNDLE POLICY: dependency-free text tools are imported statically (they
+ * share the route chunk; all seven together are a few kB). Tools that
+ * carry a third-party library — starting with the QR generator and its
+ * `qrcode` dependency — register a client-side lazy wrapper (see
+ * QrCodeGeneratorLazy) so the library chunk is fetched ONLY on that
+ * tool's page. The dynamic() call must sit inside a client component;
+ * from a server module Next.js would ship the chunk on every tool page.
  *
  * SHIPPING A NEW TOOL: build the component under components/tools/<slug>/,
- * add one line here. No page, routing, layout, or SEO changes — those are
- * already registry-driven.
- *
- * Keys are typed against the Tool slug field's usage; a typo'd slug simply
- * never matches, and the page falls back safely to the launch notice.
+ * add one line here (dynamic() if it has heavy dependencies).
  */
 
 export const toolImplementations: Partial<Record<string, ComponentType>> = {
@@ -34,6 +36,7 @@ export const toolImplementations: Partial<Record<string, ComponentType>> = {
   "base64-encoder": Base64Tool,
   "text-reverser": TextReverser,
   "remove-duplicate-lines": RemoveDuplicateLines,
+  "qr-code-generator": QrCodeGeneratorLazy,
 };
 
 export function getToolImplementation(

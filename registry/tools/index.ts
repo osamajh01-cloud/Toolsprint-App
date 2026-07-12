@@ -20,6 +20,7 @@ import { hashtagGenerator } from "@/registry/tools/hashtag-generator";
 import { utmLinkBuilder } from "@/registry/tools/utm-link-builder";
 import { imageToBase64 } from "@/registry/tools/image-to-base64";
 import { colorPaletteExtractor } from "@/registry/tools/color-palette-extractor";
+import { qrCodeGenerator } from "@/registry/tools/qr-code-generator";
 import { pomodoroTimer } from "@/registry/tools/pomodoro-timer";
 import { passwordGenerator } from "@/registry/tools/password-generator";
 import { unitConverter } from "@/registry/tools/unit-converter";
@@ -63,6 +64,7 @@ export const tools: Tool[] = [
   // Image
   imageToBase64,
   colorPaletteExtractor,
+  qrCodeGenerator,
   // Productivity
   pomodoroTimer,
   passwordGenerator,

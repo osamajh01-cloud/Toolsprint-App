@@ -68,6 +68,14 @@ const paths: Record<ToolIconName, React.ReactNode> = {
     </>
   ),
   scale: <path d="M8 3 4 7l4 4M4 7h16M16 21l4-4-4-4M20 17H4" />,
+  qr: (
+    <>
+      <rect x="3" y="3" width="7" height="7" rx="1" />
+      <rect x="14" y="3" width="7" height="7" rx="1" />
+      <rect x="3" y="14" width="7" height="7" rx="1" />
+      <path d="M14 14h3v3h-3zM21 14v.01M14 21v.01M17.5 17.5 21 21" />
+    </>
+  ),
 };
 
 interface ToolIconProps {
