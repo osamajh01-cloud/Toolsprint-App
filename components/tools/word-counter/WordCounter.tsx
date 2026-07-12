@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/shared/EmptyState";
+import { CopyButton } from "@/components/tools/CopyButton";
+import { useClipboardRead } from "@/hooks/use-clipboard";
 import {
   analyzeText,
   formatDuration,
@@ -23,11 +25,10 @@ import {
  * required. State is a single string, so nothing re-renders except this
  * island.
  *
- * Clipboard: Copy uses navigator.clipboard.writeText with a transient
- * "Copied" confirmation (announced via the button's aria-live). Paste is
- * feature-detected after mount — Firefox doesn't expose readText — and
- * the button only renders where it can work, so the UI never shows a
- * control that's guaranteed to fail.
+ * Clipboard: copy/paste behavior comes from the shared CopyButton and
+ * use-clipboard hook (extracted in Milestone 6 — this component was the
+ * pattern's first home). Paste renders only where clipboard read is
+ * supported, and blocked copies fall back to selecting the text.
  */
 
 /** Soft guide for the length progress bar (doesn't limit input). */
@@ -57,43 +58,18 @@ function StatCard({ label, value, hint }: StatCardProps) {
 
 export function WordCounter() {
   const [text, setText] = useState("");
-  const [copied, setCopied] = useState(false);
-  const [canPaste, setCanPaste] = useState(false);
+  const { canPaste, read } = useClipboardRead();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  // Feature-detect clipboard read support after mount (browser-only API;
-  // checking during render would desync server and client markup).
-  useEffect(() => {
-    setCanPaste(
-      typeof navigator !== "undefined" &&
-        typeof navigator.clipboard?.readText === "function",
-    );
-  }, []);
 
   const stats = useMemo(() => analyzeText(text), [text]);
   const hasText = text.trim().length > 0;
 
-  async function copyText() {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Clipboard write blocked (permissions) — select the text instead so
-      // the user can copy manually; never fail silently.
-      textareaRef.current?.select();
-    }
-  }
-
   async function pasteText() {
-    try {
-      const clipboard = await navigator.clipboard.readText();
-      if (clipboard) setText((current) => current + clipboard);
-      textareaRef.current?.focus();
-    } catch {
-      // Permission denied — focus the textarea so Ctrl/Cmd+V just works.
-      textareaRef.current?.focus();
-    }
+    const clipboard = await read();
+    if (clipboard) setText((current) => current + clipboard);
+    // On success or permission denial alike, land focus in the textarea —
+    // Ctrl/Cmd+V then just works if the API was blocked.
+    textareaRef.current?.focus();
   }
 
   function clearText() {
@@ -123,15 +99,12 @@ export function WordCounter() {
                 Paste from clipboard
               </Button>
             )}
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={copyText}
+            <CopyButton
+              text={text}
+              label="Copy text"
               disabled={!hasText}
-              aria-live="polite"
-            >
-              {copied ? "Copied" : "Copy text"}
-            </Button>
+              onError={() => textareaRef.current?.select()}
+            />
             <Button
               variant="ghost"
               size="sm"

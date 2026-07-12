@@ -39,7 +39,7 @@ export function ToolsDirectory() {
         <SearchBar
           value={query}
           onChange={setQuery}
-          placeholder="Search 20 tools — try “json”, “password”, or “hashtag”…"
+          placeholder={`Search ${tools.length} tools — try “json”, “password”, or “hashtag”…`}
           label="Search tools"
           className="max-w-xl"
         />

@@ -5,6 +5,8 @@ import { wordCounter } from "@/registry/tools/word-counter";
 import { caseConverter } from "@/registry/tools/case-converter";
 import { loremIpsumGenerator } from "@/registry/tools/lorem-ipsum-generator";
 import { textCleaner } from "@/registry/tools/text-cleaner";
+import { textReverser } from "@/registry/tools/text-reverser";
+import { removeDuplicateLinesTool } from "@/registry/tools/remove-duplicate-lines";
 import { jsonFormatter } from "@/registry/tools/json-formatter";
 import { base64Encoder } from "@/registry/tools/base64-encoder";
 import { uuidGenerator } from "@/registry/tools/uuid-generator";
@@ -42,6 +44,8 @@ export const tools: Tool[] = [
   caseConverter,
   loremIpsumGenerator,
   textCleaner,
+  textReverser,
+  removeDuplicateLinesTool,
   // Developer
   jsonFormatter,
   base64Encoder,
