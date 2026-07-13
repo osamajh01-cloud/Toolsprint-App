@@ -21,6 +21,7 @@ import { utmLinkBuilder } from "@/registry/tools/utm-link-builder";
 import { imageToBase64 } from "@/registry/tools/image-to-base64";
 import { colorPaletteExtractor } from "@/registry/tools/color-palette-extractor";
 import { qrCodeGenerator } from "@/registry/tools/qr-code-generator";
+import { imageCompressor } from "@/registry/tools/image-compressor";
 import { pomodoroTimer } from "@/registry/tools/pomodoro-timer";
 import { passwordGenerator } from "@/registry/tools/password-generator";
 import { unitConverter } from "@/registry/tools/unit-converter";
@@ -65,6 +66,7 @@ export const tools: Tool[] = [
   imageToBase64,
   colorPaletteExtractor,
   qrCodeGenerator,
+  imageCompressor,
   // Productivity
   pomodoroTimer,
   passwordGenerator,

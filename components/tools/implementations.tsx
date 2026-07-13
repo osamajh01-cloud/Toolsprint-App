@@ -7,6 +7,7 @@ import { Base64Tool } from "@/components/tools/base64-encoder/Base64Tool";
 import { TextReverser } from "@/components/tools/text-reverser/TextReverser";
 import { RemoveDuplicateLines } from "@/components/tools/remove-duplicate-lines/RemoveDuplicateLines";
 import { QrCodeGeneratorLazy } from "@/components/tools/qr-code-generator/QrCodeGeneratorLazy";
+import { ImageCompressorLazy } from "@/components/tools/image-compressor/ImageCompressorLazy";
 
 /**
  * components/tools/implementations.tsx
@@ -37,6 +38,7 @@ export const toolImplementations: Partial<Record<string, ComponentType>> = {
   "text-reverser": TextReverser,
   "remove-duplicate-lines": RemoveDuplicateLines,
   "qr-code-generator": QrCodeGeneratorLazy,
+  "image-compressor": ImageCompressorLazy,
 };
 
 export function getToolImplementation(
