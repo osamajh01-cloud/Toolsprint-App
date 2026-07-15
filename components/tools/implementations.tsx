@@ -9,6 +9,8 @@ import { RemoveDuplicateLines } from "@/components/tools/remove-duplicate-lines/
 import { QrCodeGeneratorLazy } from "@/components/tools/qr-code-generator/QrCodeGeneratorLazy";
 import { ImageCompressorLazy } from "@/components/tools/image-compressor/ImageCompressorLazy";
 import { PdfMergeLazy } from "@/components/tools/pdf-merge/PdfMergeLazy";
+import { PdfSplitLazy } from "@/components/tools/pdf-split/PdfSplitLazy";
+import { PdfCompressorLazy } from "@/components/tools/pdf-compressor/PdfCompressorLazy";
 
 /**
  * components/tools/implementations.tsx
@@ -41,6 +43,8 @@ export const toolImplementations: Partial<Record<string, ComponentType>> = {
   "qr-code-generator": QrCodeGeneratorLazy,
   "image-compressor": ImageCompressorLazy,
   "pdf-merge": PdfMergeLazy,
+  "pdf-split": PdfSplitLazy,
+  "pdf-compressor": PdfCompressorLazy,
 };
 
 export function getToolImplementation(

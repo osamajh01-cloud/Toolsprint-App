@@ -14,6 +14,7 @@ import {
   savingsPercent,
 } from "@/lib/image-utils";
 import { formatDuration } from "@/lib/text-analysis";
+import { downloadBlob, downloadZip, withSuffix } from "@/lib/download";
 
 /**
  * components/tools/image-compressor/ImageCompressor.tsx
@@ -307,67 +308,25 @@ export function ImageCompressor() {
     setRejected([]);
   }
 
-  function compressedName(name: string): string {
-    const dot = name.lastIndexOf(".");
-    return dot > 0
-      ? `${name.slice(0, dot)}-compressed${name.slice(dot)}`
-      : `${name}-compressed`;
-  }
-
   function downloadItem(item: CompressorItem) {
     if (!item.compressedBlob) return;
-    const url = URL.createObjectURL(item.compressedBlob);
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = compressedName(item.file.name);
-    anchor.click();
-    URL.revokeObjectURL(url);
+    downloadBlob(item.compressedBlob, withSuffix(item.file.name, "-compressed"));
   }
 
-  async function downloadZip() {
+  async function downloadAllAsZip() {
     const done = itemsRef.current.filter(
       (entry) => entry.status === "done" && entry.compressedBlob,
     );
     if (done.length === 0) return;
     setZipping(true);
     try {
-      // fflate is loaded only here — first ZIP click, not before.
-      const { zip } = await import("fflate");
-
-      const entries: Record<string, Uint8Array> = {};
-      const used = new Set<string>();
-      for (const item of done) {
-        let name = compressedName(item.file.name);
-        let counter = 2;
-        while (used.has(name)) {
-          const dot = name.lastIndexOf(".");
-          name =
-            dot > 0
-              ? `${name.slice(0, dot)}-${counter}${name.slice(dot)}`
-              : `${name}-${counter}`;
-          counter += 1;
-        }
-        used.add(name);
-        entries[name] = new Uint8Array(
-          await item.compressedBlob!.arrayBuffer(),
-        );
-      }
-
-      const data = await new Promise<Uint8Array>((resolve, reject) => {
-        // level 0: the images are already compressed; deflating them
-        // again wastes CPU for ~0% gain.
-        zip(entries, { level: 0 }, (error, result) =>
-          error ? reject(error) : resolve(result),
-        );
-      });
-
-      const blob = new Blob([data as BlobPart], { type: "application/zip" });
-      const url = URL.createObjectURL(blob);
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = "toolsprint-compressed-images.zip";
-      anchor.click();
-      URL.revokeObjectURL(url);
+      await downloadZip(
+        done.map((item) => ({
+          name: withSuffix(item.file.name, "-compressed"),
+          blob: item.compressedBlob!,
+        })),
+        "toolsprint-compressed-images.zip",
+      );
     } finally {
       setZipping(false);
     }
@@ -570,7 +529,7 @@ export function ImageCompressor() {
           </p>
           <div className="flex flex-wrap gap-2">
             {totals.doneCount > 1 && (
-              <Button size="sm" onClick={downloadZip} disabled={zipping}>
+              <Button size="sm" onClick={downloadAllAsZip} disabled={zipping}>
                 {zipping ? "Zipping…" : "Download all as ZIP"}
               </Button>
             )}
