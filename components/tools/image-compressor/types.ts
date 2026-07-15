@@ -23,5 +23,8 @@ export interface CompressorItem {
   /** Object URL of the result — revoked on recompress/remove/clear. */
   compressedUrl: string | null;
   compressedSize: number | null;
+  /** Result dimensions — equal to width/height unless Auto downscaled. */
+  compressedWidth: number | null;
+  compressedHeight: number | null;
   error: string | null;
 }

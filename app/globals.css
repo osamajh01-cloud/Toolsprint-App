@@ -61,6 +61,22 @@
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Micro-animation for content appearing (previews, result cards).
+     Always used behind Tailwind's motion-safe: variant so users with
+     prefers-reduced-motion never see it. */
+  --animate-fade-in: fade-in 300ms ease both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 body {

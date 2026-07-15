@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { StatCard } from "@/components/ui/StatCard";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { CopyButton } from "@/components/tools/CopyButton";
 import { useClipboardRead } from "@/hooks/use-clipboard";
@@ -33,28 +34,6 @@ import {
 
 /** Soft guide for the length progress bar (doesn't limit input). */
 const LENGTH_GUIDE = 10_000;
-
-interface StatCardProps {
-  label: string;
-  value: string | number;
-  hint?: string;
-}
-
-/** One statistic tile. Local to this tool — the label/value card pattern
- *  will be promoted to components/ui if a second tool needs it. */
-function StatCard({ label, value, hint }: StatCardProps) {
-  return (
-    <div className="flex flex-col gap-1 rounded-xl border border-border bg-background p-4">
-      <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-        {label}
-      </dt>
-      <dd className="text-2xl font-bold tabular-nums tracking-tight">
-        {value}
-      </dd>
-      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
-    </div>
-  );
-}
 
 export function WordCounter() {
   const [text, setText] = useState("");

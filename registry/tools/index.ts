@@ -22,6 +22,7 @@ import { imageToBase64 } from "@/registry/tools/image-to-base64";
 import { colorPaletteExtractor } from "@/registry/tools/color-palette-extractor";
 import { qrCodeGenerator } from "@/registry/tools/qr-code-generator";
 import { imageCompressor } from "@/registry/tools/image-compressor";
+import { pdfMerge } from "@/registry/tools/pdf-merge";
 import { pomodoroTimer } from "@/registry/tools/pomodoro-timer";
 import { passwordGenerator } from "@/registry/tools/password-generator";
 import { unitConverter } from "@/registry/tools/unit-converter";
@@ -71,6 +72,7 @@ export const tools: Tool[] = [
   pomodoroTimer,
   passwordGenerator,
   unitConverter,
+  pdfMerge,
 ];
 
 /** Look up a single tool by its URL slug (used by /tools/[slug]). */

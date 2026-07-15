@@ -13,6 +13,7 @@ import {
   isSupportedImage,
   savingsPercent,
 } from "@/lib/image-utils";
+import { formatDuration } from "@/lib/text-analysis";
 
 /**
  * components/tools/image-compressor/ImageCompressor.tsx
@@ -48,6 +49,12 @@ const QUALITY_PRESETS = [
   { value: "maximum", label: "Maximum" },
   { value: "auto", label: "Auto" },
 ] as const;
+
+/** 100 → 10 in steps of ten; chip active when the slider sits on it. */
+const PERCENT_CHIPS = Array.from({ length: 10 }, (_, index) => {
+  const value = 100 - index * 10;
+  return { value: String(value), label: `${value}%` };
+});
 
 const PRESET_VALUES: Partial<Record<QualityMode, number>> = {
   low: 40,
@@ -107,6 +114,16 @@ export function ImageCompressor() {
         const result = await imageCompression(item.file, options);
         if (generation !== generationRef.current) return;
 
+        // Result dimensions: proves "resolution unchanged" (manual mode)
+        // or reveals Auto's downscale honestly.
+        let resultDims: { width: number; height: number } | null = null;
+        try {
+          resultDims = await getImageDimensions(result);
+        } catch {
+          /* dimensions stay unknown */
+        }
+        if (generation !== generationRef.current) return;
+
         setItems((current) =>
           current.map((entry) => {
             if (entry.id !== item.id) return entry;
@@ -124,6 +141,8 @@ export function ImageCompressor() {
               compressedBlob: blob,
               compressedUrl: URL.createObjectURL(blob),
               compressedSize: blob.size,
+              compressedWidth: useOriginal ? entry.width : (resultDims?.width ?? null),
+              compressedHeight: useOriginal ? entry.height : (resultDims?.height ?? null),
               error: null,
             };
           }),
@@ -188,6 +207,8 @@ export function ImageCompressor() {
             compressedBlob: null,
             compressedUrl: null,
             compressedSize: null,
+            compressedWidth: null,
+            compressedHeight: null,
             error: null,
           };
         }),
@@ -385,7 +406,9 @@ export function ImageCompressor() {
         }`}
       >
         <p className="text-lg font-semibold">
-          Drop JPEG, PNG, or WebP images here
+          {items.length > 0
+            ? "+ Add more images"
+            : "Drop JPEG, PNG, or WebP images here"}
         </p>
         <p className="text-sm text-muted-foreground">
           …or paste from the clipboard (Ctrl/Cmd&nbsp;+&nbsp;V). Up to{" "}
@@ -407,6 +430,59 @@ export function ImageCompressor() {
           }}
         />
       </div>
+
+      {/* Empty state: privacy story + illustration, until images arrive */}
+      {items.length === 0 && (
+        <div className="flex flex-col items-center gap-5 rounded-xl border border-border bg-muted/20 px-6 py-10 text-center motion-safe:animate-fade-in">
+          {/* Illustration: a photo shrinking, drawn with theme tokens */}
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 160 96"
+            fill="none"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-24 w-40"
+          >
+            <rect
+              x="6"
+              y="6"
+              width="84"
+              height="64"
+              rx="8"
+              className="stroke-border fill-background"
+            />
+            <circle cx="30" cy="28" r="7" className="stroke-brand" />
+            <path d="m14 62 20-20 14 12 16-16 22 24" className="stroke-brand" />
+            <rect
+              x="112"
+              y="34"
+              width="42"
+              height="32"
+              rx="6"
+              className="stroke-brand fill-brand/10"
+            />
+            <circle cx="124" cy="45" r="3.5" className="stroke-brand" />
+            <path d="m116 62 10-10 7 6 8-8 11 12" className="stroke-brand" />
+            <path d="M94 50h12m0 0-5-5m5 5-5 5" className="stroke-foreground" />
+          </svg>
+
+          <ul className="flex flex-col gap-1.5 text-sm text-muted-foreground sm:flex-row sm:gap-6">
+            <li className="flex items-center justify-center gap-1.5">
+              <span aria-hidden="true" className="text-brand">•</span> Nothing
+              leaves your device
+            </li>
+            <li className="flex items-center justify-center gap-1.5">
+              <span aria-hidden="true" className="text-brand">•</span> No
+              uploads, no accounts
+            </li>
+            <li className="flex items-center justify-center gap-1.5">
+              <span aria-hidden="true" className="text-brand">•</span> Fast
+              in-browser processing
+            </li>
+          </ul>
+        </div>
+      )}
 
       {/* Rejected files */}
       {rejected.length > 0 && (
@@ -451,6 +527,17 @@ export function ImageCompressor() {
           formatValue={(v) => `${v}%`}
           disabled={mode === "auto"}
         />
+        {mode !== "auto" && (
+          <SegmentedControl
+            label="Quality percentage"
+            options={PERCENT_CHIPS}
+            value={String(quality)}
+            onChange={(next) => {
+              setQuality(Number(next));
+              setMode("custom");
+            }}
+          />
+        )}
         <p className="text-xs text-muted-foreground">
           {mode === "auto"
             ? "Auto targets roughly half the original file size per image."
@@ -471,8 +558,13 @@ export function ImageCompressor() {
                   {formatBytes(totals.compressed)}
                 </span>{" "}
                 across {totals.doneCount}{" "}
-                {totals.doneCount === 1 ? "image" : "images"} (
-                {savingsPercent(totals.original, totals.compressed)}% saved)
+                {totals.doneCount === 1 ? "image" : "images"} — saved{" "}
+                {formatBytes(totals.original - totals.compressed)} of storage (
+                {savingsPercent(totals.original, totals.compressed)}%) and ~
+                {formatDuration(
+                  ((totals.original - totals.compressed) * 8) / 10_000_000,
+                )}{" "}
+                of upload time at 10 Mbps
               </>
             ) : null}
           </p>

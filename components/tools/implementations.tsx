@@ -8,6 +8,7 @@ import { TextReverser } from "@/components/tools/text-reverser/TextReverser";
 import { RemoveDuplicateLines } from "@/components/tools/remove-duplicate-lines/RemoveDuplicateLines";
 import { QrCodeGeneratorLazy } from "@/components/tools/qr-code-generator/QrCodeGeneratorLazy";
 import { ImageCompressorLazy } from "@/components/tools/image-compressor/ImageCompressorLazy";
+import { PdfMergeLazy } from "@/components/tools/pdf-merge/PdfMergeLazy";
 
 /**
  * components/tools/implementations.tsx
@@ -39,6 +40,7 @@ export const toolImplementations: Partial<Record<string, ComponentType>> = {
   "remove-duplicate-lines": RemoveDuplicateLines,
   "qr-code-generator": QrCodeGeneratorLazy,
   "image-compressor": ImageCompressorLazy,
+  "pdf-merge": PdfMergeLazy,
 };
 
 export function getToolImplementation(

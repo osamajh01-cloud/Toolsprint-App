@@ -76,6 +76,12 @@ const paths: Record<ToolIconName, React.ReactNode> = {
       <path d="M14 14h3v3h-3zM21 14v.01M14 21v.01M17.5 17.5 21 21" />
     </>
   ),
+  file: (
+    <>
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <path d="M14 2v6h6M9 13h6M9 17h6" />
+    </>
+  ),
 };
 
 interface ToolIconProps {

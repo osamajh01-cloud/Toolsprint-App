@@ -21,7 +21,8 @@ type Size = "sm" | "md" | "lg";
 
 const baseStyles =
   "inline-flex items-center justify-center gap-2 rounded-full font-medium " +
-  "transition-colors duration-150 focus-visible:outline-none " +
+  "transition-[color,background-color,border-color,transform] duration-150 " +
+  "active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none " +
   "focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 " +
   "focus-visible:ring-offset-background disabled:opacity-50 disabled:pointer-events-none";
 

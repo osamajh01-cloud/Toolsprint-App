@@ -36,7 +36,8 @@ export type ToolIconName =
   | "timer"
   | "key"
   | "scale"
-  | "qr";
+  | "qr"
+  | "file";
 
 /** Languages a tool's interface supports. Arabic is planned (see the
  *  header language switcher); tools declare readiness individually. */
