@@ -1,0 +1,45 @@
+import Link from "next/link";
+import { ToolIcon } from "@/components/shared/ToolIcon";
+import { categories, getCategoryCounts } from "@/registry/tools";
+
+/**
+ * components/shared/CategoryGrid.tsx
+ *
+ * "Browse by category" tiles: icon, name, live tool count, and the
+ * category's own description — all read from the category registry, so a
+ * seventh category appears here automatically. Links to the existing
+ * category pages built in Milestone 4 (no routing changes).
+ *
+ * Server Component.
+ */
+export function CategoryGrid() {
+  const counts = getCategoryCounts();
+
+  return (
+    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {categories.map((category) => (
+        <li key={category.slug}>
+          <Link
+            href={`/tools/category/${category.slug}`}
+            className="flex h-full items-start gap-3 rounded-xl border border-border p-4 transition-colors hover:border-brand/50 hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+          >
+            <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">
+              <ToolIcon name={category.icon} className="size-4" />
+            </span>
+            <span className="min-w-0">
+              <span className="flex items-baseline gap-2">
+                <span className="font-semibold">{category.title}</span>
+                <span className="text-xs tabular-nums text-muted-foreground">
+                  {counts[category.slug]}
+                </span>
+              </span>
+              <span className="mt-0.5 block text-sm text-muted-foreground">
+                {category.description}
+              </span>
+            </span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}

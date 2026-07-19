@@ -51,6 +51,10 @@ export interface ToolCategory {
   icon: ToolIconName;
 }
 
+/** Editorial collections — independent of categories. A tool has exactly
+ *  one category but may sit in zero or more collections. */
+export type CollectionSlug = "popular";
+
 export interface Tool {
   /** Stable unique identifier (never changes, even if slug/title do). */
   id: string;
@@ -68,6 +72,14 @@ export interface Tool {
   featured: boolean;
   /** Reserved for Milestone 14+ plan gating. All launch tools are free. */
   premium: boolean;
+  /** Collections this tool belongs to (e.g. "popular"). Optional. */
+  collections?: CollectionSlug[];
+  /** Manual ordering inside collections/spotlights; lower = earlier.
+   *  Tools without one sort after those that have it. */
+  displayOrder?: number;
+  /** ISO date (YYYY-MM-DD) the tool shipped. Drives the Recently Added
+   *  section and the deterministic "New" badge (newest N tools). */
+  createdAt: string;
   languageSupport: LanguageCode[];
   /** <title> for the tool page (may differ from display title for SEO). */
   seoTitle: string;

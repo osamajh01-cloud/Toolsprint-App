@@ -1,5 +1,10 @@
-import type { CategorySlug, Tool } from "@/types/tool";
+import type { CategorySlug, CollectionSlug, Tool } from "@/types/tool";
 import { categories, getCategory } from "@/registry/tools/categories";
+import {
+  collections,
+  getCollection,
+  RECENT_TOOL_COUNT,
+} from "@/registry/tools/collections";
 
 import { wordCounter } from "@/registry/tools/word-counter";
 import { caseConverter } from "@/registry/tools/case-converter";
@@ -103,4 +108,59 @@ export function getCategoryCounts(): Record<CategorySlug, number> {
   return counts;
 }
 
-export { categories, getCategory };
+/* ------------------------- collections & recency -------------------------
+ * All derived from registry metadata — nothing is hardcoded here, so a
+ * tool joining a collection or shipping later is reflected everywhere
+ * (homepage, badges, search ranking) by editing only its own file.
+ */
+
+/** Tools in a collection, ordered by displayOrder (unset sorts last). */
+export function getToolsInCollection(collection: CollectionSlug): Tool[] {
+  return tools
+    .filter((tool) => tool.collections?.includes(collection))
+    .sort(
+      (a, b) =>
+        (a.displayOrder ?? Number.MAX_SAFE_INTEGER) -
+        (b.displayOrder ?? Number.MAX_SAFE_INTEGER),
+    );
+}
+
+export function isPopular(tool: Tool): boolean {
+  return tool.collections?.includes("popular") ?? false;
+}
+
+/** Newest tools by createdAt, most recent first (ties broken by id so the
+ *  order is stable). */
+export function getRecentTools(limit: number = RECENT_TOOL_COUNT): Tool[] {
+  return [...tools]
+    .sort((a, b) =>
+      a.createdAt === b.createdAt
+        ? b.id.localeCompare(a.id)
+        : b.createdAt.localeCompare(a.createdAt),
+    )
+    .slice(0, limit);
+}
+
+/** Slugs of the tools that currently count as "new" — the same set shown
+ *  in Recently Added, so the badge and the section can never disagree. */
+const recentSlugs = new Set(getRecentTools().map((tool) => tool.slug));
+
+export function isNew(tool: Tool): boolean {
+  return recentSlugs.has(tool.slug);
+}
+
+/** Ranking used by search results and the All-tools grid: popular first,
+ *  then featured, then everything else; registry order breaks ties. */
+export function toolRank(tool: Tool): number {
+  if (isPopular(tool)) return 0;
+  if (tool.featured) return 1;
+  return 2;
+}
+
+/** Stable sort of any tool list by rank, preserving registry order within
+ *  each rank (Array.prototype.sort is stable in modern engines). */
+export function sortByRank(list: Tool[]): Tool[] {
+  return [...list].sort((a, b) => toolRank(a) - toolRank(b));
+}
+
+export { categories, getCategory, collections, getCollection, RECENT_TOOL_COUNT };

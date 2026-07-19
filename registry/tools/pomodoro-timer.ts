@@ -23,6 +23,7 @@ export const pomodoroTimer: Tool = {
   "icon": "timer",
   "featured": false,
   "premium": false,
+  createdAt: "2026-06-20",
   "languageSupport": [
     "en"
   ],

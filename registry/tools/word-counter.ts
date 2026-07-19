@@ -23,6 +23,7 @@ export const wordCounter: Tool = {
   "icon": "text",
   "featured": true,
   "premium": false,
+  createdAt: "2026-06-20",
   "languageSupport": [
     "en"
   ],

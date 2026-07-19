@@ -23,6 +23,7 @@ export const jsonFormatter: Tool = {
   "icon": "braces",
   "featured": true,
   "premium": false,
+  createdAt: "2026-06-20",
   "languageSupport": [
     "en"
   ],

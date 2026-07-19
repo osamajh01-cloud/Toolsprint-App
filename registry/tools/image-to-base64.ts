@@ -23,6 +23,7 @@ export const imageToBase64: Tool = {
   "icon": "image",
   "featured": false,
   "premium": false,
+  createdAt: "2026-06-20",
   "languageSupport": [
     "en"
   ],

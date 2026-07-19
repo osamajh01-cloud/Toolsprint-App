@@ -22,6 +22,7 @@ export const keywordDensityChecker: Tool = {
   "icon": "chart",
   "featured": false,
   "premium": false,
+  createdAt: "2026-06-20",
   "languageSupport": [
     "en"
   ],

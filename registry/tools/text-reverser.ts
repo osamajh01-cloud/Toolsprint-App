@@ -18,6 +18,7 @@ export const textReverser: Tool = {
   icon: "scale",
   featured: false,
   premium: false,
+  createdAt: "2026-06-28",
   languageSupport: ["en"],
   seoTitle: "Text Reverser — Reverse Characters, Words & Lines Online",
   seoDescription:

@@ -24,6 +24,7 @@ export const socialCharacterCounter: Tool = {
   "icon": "hash",
   "featured": false,
   "premium": false,
+  createdAt: "2026-06-20",
   "languageSupport": [
     "en"
   ],

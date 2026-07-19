@@ -18,6 +18,7 @@ export const removeDuplicateLinesTool: Tool = {
   icon: "paragraph",
   featured: false,
   premium: false,
+  createdAt: "2026-06-28",
   languageSupport: ["en"],
   seoTitle: "Remove Duplicate Lines Online — Clean & Sort Any List",
   seoDescription:

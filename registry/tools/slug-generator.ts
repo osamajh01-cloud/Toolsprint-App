@@ -22,6 +22,7 @@ export const slugGenerator: Tool = {
   "icon": "link",
   "featured": true,
   "premium": false,
+  createdAt: "2026-06-20",
   "languageSupport": [
     "en"
   ],

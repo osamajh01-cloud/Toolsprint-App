@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { tools } from "@/registry/tools";
+import { sortByRank, tools } from "@/registry/tools";
 import type { CategorySlug, Tool } from "@/types/tool";
 
 /**
@@ -15,6 +15,11 @@ import type { CategorySlug, Tool } from "@/types/tool";
  *
  * Matching: case-insensitive substring over title, shortDescription, and
  * tags. Category filter and text query compose (AND).
+ *
+ * Ordering (Milestone 11.1): results are ranked popular → featured →
+ * everything else via the registry's sortByRank, with registry order
+ * breaking ties. Ranking is metadata-driven, so curating a tool changes
+ * its search position without touching this file.
  */
 
 export type CategoryFilterValue = CategorySlug | "all";
@@ -26,7 +31,7 @@ export function useToolSearch() {
   const results: Tool[] = useMemo(() => {
     const normalized = query.trim().toLowerCase();
 
-    return tools.filter((tool) => {
+    const matched = tools.filter((tool) => {
       if (category !== "all" && tool.category !== category) return false;
       if (!normalized) return true;
 
@@ -36,6 +41,8 @@ export function useToolSearch() {
         tool.tags.some((tag) => tag.toLowerCase().includes(normalized))
       );
     });
+
+    return sortByRank(matched);
   }, [query, category]);
 
   /** True when the user has narrowed the catalog in any way. */

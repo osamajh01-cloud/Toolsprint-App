@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { ToolIcon } from "@/components/shared/ToolIcon";
 import { getCategory } from "@/registry/tools/categories";
+import { isNew, isPopular } from "@/registry/tools";
 import type { Tool } from "@/types/tool";
 
 /**
@@ -25,6 +26,13 @@ interface ToolCardProps {
 export function ToolCard({ tool }: ToolCardProps) {
   const category = getCategory(tool.category);
 
+  // Status badges, all derived from registry metadata — a tool can carry
+  // several at once (e.g. Popular + New).
+  const statusBadges: string[] = [];
+  if (isPopular(tool)) statusBadges.push("Popular");
+  if (isNew(tool)) statusBadges.push("New");
+  if (tool.featured) statusBadges.push("Featured");
+
   return (
     <Link
       href={`/tools/${tool.slug}`}
@@ -39,6 +47,14 @@ export function ToolCard({ tool }: ToolCardProps) {
           <Badge variant="brand">{tool.premium ? "Pro" : "Free"}</Badge>
         </div>
       </div>
+
+      {statusBadges.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {statusBadges.map((label) => (
+            <Badge key={label}>{label}</Badge>
+          ))}
+        </div>
+      )}
 
       <div className="flex-1">
         <h3 className="font-semibold leading-snug">{tool.title}</h3>

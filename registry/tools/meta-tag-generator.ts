@@ -23,6 +23,7 @@ export const metaTagGenerator: Tool = {
   "icon": "tag",
   "featured": false,
   "premium": false,
+  createdAt: "2026-06-20",
   "languageSupport": [
     "en"
   ],

@@ -19,6 +19,9 @@ export const imageCompressor: Tool = {
   icon: "image",
   featured: false,
   premium: false,
+  collections: ["popular"],
+  displayOrder: 4,
+  createdAt: "2026-07-05",
   languageSupport: ["en"],
   seoTitle: "Image Compressor — Shrink JPEG, PNG & WebP Online (Private)",
   seoDescription:

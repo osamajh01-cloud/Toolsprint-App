@@ -19,6 +19,9 @@ export const pdfMerge: Tool = {
   icon: "file",
   featured: false,
   premium: false,
+  collections: ["popular"],
+  displayOrder: 1,
+  createdAt: "2026-07-08",
   languageSupport: ["en"],
   seoTitle: "Merge PDF Files Online — Combine PDFs Privately (Free)",
   seoDescription:
