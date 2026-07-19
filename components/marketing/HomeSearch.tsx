@@ -42,21 +42,21 @@ export function HomeSearch() {
           </p>
 
           {visible.length > 0 ? (
-            <ul className="flex flex-col gap-1 rounded-xl border border-border bg-background p-2 motion-safe:animate-fade-in">
+            <ul className="flex flex-col gap-1 rounded-xl border border-border bg-surface p-2 motion-safe:animate-fade-in">
               {visible.map((tool) => (
                 <li key={tool.id}>
                   <Link
                     href={`/tools/${tool.slug}`}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   >
-                    <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-md bg-brand/10 text-brand">
+                    <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-md bg-primary-subtle text-primary">
                       <ToolIcon name={tool.icon} className="size-4" />
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-sm font-medium">
                         {tool.title}
                       </span>
-                      <span className="block truncate text-xs text-muted-foreground">
+                      <span className="block truncate text-xs text-foreground-muted">
                         {tool.shortDescription}
                       </span>
                     </span>
@@ -67,7 +67,7 @@ export function HomeSearch() {
                 <li className="px-3 py-2">
                   <Link
                     href="/tools"
-                    className="rounded-sm text-sm font-medium text-brand hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                    className="rounded-sm text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   >
                     See all {results.length} matches in the directory →
                   </Link>
@@ -75,11 +75,11 @@ export function HomeSearch() {
               )}
             </ul>
           ) : (
-            <p className="rounded-xl border border-dashed border-border px-4 py-6 text-center text-sm text-muted-foreground">
+            <p className="rounded-xl border border-dashed border-border px-4 py-6 text-center text-sm text-foreground-muted">
               No tools match “{query.trim()}”.{" "}
               <Link
                 href="/tools"
-                className="font-medium text-brand hover:underline"
+                className="font-medium text-primary hover:underline"
               >
                 Browse the full catalog
               </Link>
@@ -90,7 +90,7 @@ export function HomeSearch() {
       )}
 
       {!isFiltering && (
-        <p className="text-center text-xs text-muted-foreground">
+        <p className="text-center text-xs text-foreground-muted">
           <Badge variant="outline">Tip</Badge>{" "}
           <span className="ml-1">
             Every tool runs in your browser — nothing is uploaded.

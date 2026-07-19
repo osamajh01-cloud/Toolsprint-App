@@ -21,19 +21,19 @@ export function CategoryGrid() {
         <li key={category.slug}>
           <Link
             href={`/tools/category/${category.slug}`}
-            className="flex h-full items-start gap-3 rounded-xl border border-border p-4 transition-colors hover:border-brand/50 hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+            className="flex h-full items-start gap-3 rounded-xl border border-border p-4 transition-colors hover:border-primary/40 hover:bg-surface-sunken focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
-            <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">
+            <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary-subtle text-primary">
               <ToolIcon name={category.icon} className="size-4" />
             </span>
             <span className="min-w-0">
               <span className="flex items-baseline gap-2">
                 <span className="font-semibold">{category.title}</span>
-                <span className="text-xs tabular-nums text-muted-foreground">
+                <span className="text-xs tabular-nums text-foreground-muted">
                   {counts[category.slug]}
                 </span>
               </span>
-              <span className="mt-0.5 block text-sm text-muted-foreground">
+              <span className="mt-0.5 block text-sm text-foreground-muted">
                 {category.description}
               </span>
             </span>

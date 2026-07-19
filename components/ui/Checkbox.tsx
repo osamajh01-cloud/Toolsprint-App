@@ -29,11 +29,11 @@ export function Checkbox({ id, label, checked, onChange, hint }: CheckboxProps) 
         type="checkbox"
         checked={checked}
         onChange={(event) => onChange(event.target.checked)}
-        className="mt-0.5 size-4 shrink-0 cursor-pointer rounded border-border accent-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="mt-0.5 size-4 shrink-0 cursor-pointer rounded border-border accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       />
       <span className="flex flex-col gap-0.5">
         <span className="font-medium text-foreground">{label}</span>
-        {hint && <span className="text-muted-foreground">{hint}</span>}
+        {hint && <span className="text-foreground-muted">{hint}</span>}
       </span>
     </label>
   );

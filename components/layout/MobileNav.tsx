@@ -61,7 +61,7 @@ export function MobileNav() {
         aria-expanded={open}
         aria-controls={MENU_ID}
         aria-label={open ? "Close menu" : "Open menu"}
-        className="inline-flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+        className="inline-flex size-9 items-center justify-center rounded-full text-foreground-muted transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
         <svg
           aria-hidden="true"
@@ -83,7 +83,7 @@ export function MobileNav() {
       {open && (
         <div
           id={MENU_ID}
-          className="absolute inset-x-0 top-full border-b border-border bg-background shadow-lg"
+          className="absolute inset-x-0 top-full border-b border-border bg-surface shadow-lg"
         >
           <nav aria-label="Mobile" className="flex flex-col gap-1 p-4">
             {mainNav.map((item) => (

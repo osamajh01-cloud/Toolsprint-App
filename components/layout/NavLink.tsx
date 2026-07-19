@@ -37,12 +37,12 @@ export function NavLink({
 
   const base =
     variant === "desktop"
-      ? "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
-      : "flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand";
+      ? "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      : "flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
   const state = isActive
-    ? "text-foreground bg-muted"
-    : "text-muted-foreground hover:text-foreground hover:bg-muted/60";
+    ? "text-foreground bg-surface-sunken"
+    : "text-foreground-muted hover:text-foreground hover:bg-surface-sunken";
 
   return (
     <Link
@@ -52,7 +52,7 @@ export function NavLink({
       className={`${base} ${state}`}
     >
       {item.title}
-      {item.comingSoon && <Badge variant="brand">Soon</Badge>}
+      {item.comingSoon && <Badge variant="primary">Soon</Badge>}
     </Link>
   );
 }

@@ -50,7 +50,7 @@ export function RemoveDuplicateLines() {
       />
 
       <fieldset className="flex flex-wrap gap-x-8 gap-y-3 rounded-xl border border-border p-4">
-        <legend className="px-1.5 text-sm font-medium text-muted-foreground">
+        <legend className="px-1.5 text-sm font-medium text-foreground-muted">
           Options
         </legend>
         <Checkbox
@@ -77,7 +77,7 @@ export function RemoveDuplicateLines() {
       </fieldset>
 
       {hasInput && (
-        <p aria-live="polite" className="text-sm text-muted-foreground">
+        <p aria-live="polite" className="text-sm text-foreground-muted">
           {result.totalLines.toLocaleString()}{" "}
           {result.totalLines === 1 ? "line" : "lines"} →{" "}
           <span className="font-medium text-foreground">

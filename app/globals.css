@@ -1,94 +1,254 @@
 @import "tailwindcss";
 
 /**
- * globals.css
+ * globals.css — ToolSprint Design System (Milestone 12)
  *
- * Tailwind CSS v4 CSS-first configuration. Design tokens are CSS custom
- * properties exposed to Tailwind's utility generator via `@theme`.
+ * Tailwind v4 CSS-first configuration. Every color, radius, shadow, and
+ * motion value in the product resolves to a token declared here; no
+ * component hardcodes a hex value.
  *
- * DARK MODE STRATEGY (Milestone 2):
- * Dark mode is class-based (`.dark` on <html>), not media-query-based,
- * because the header has a user-facing theme toggle. The user's choice is
- * persisted to localStorage and applied before first paint by an inline
- * script in app/layout.tsx (see ThemeScript) to avoid a flash of the
- * wrong theme. The `@custom-variant` below makes Tailwind's `dark:`
- * utilities follow the class instead of `prefers-color-scheme`.
+ * DESIGN DIRECTION
+ * ToolSprint's differentiator is that work happens on your own machine —
+ * it's a workshop, not a cloud service. The palette is built on a deep
+ * teal (precise, instrument-like) over warm-tinted neutrals rather than
+ * the default indigo-on-pure-grey that makes Tailwind sites look alike.
+ * Dark mode uses a soft charcoal (#14161A), never #000, with surfaces
+ * that step up in lightness so cards read as objects on a desk.
+ *
+ * SEMANTIC LAYERS
+ *   background / surface / surface-raised  — page, cards, elevated cards
+ *   border / border-strong                 — hairlines, emphasized edges
+ *   foreground / foreground-muted / -subtle— text hierarchy
+ *   primary / secondary / accent           — brand actions
+ *   success / warning / danger / info      — states
+ * Each has a *-foreground pair where text sits on it, so contrast is
+ * decided once, in the token, not per component.
+ *
+ * DARK MODE is class-based (.dark on <html>), applied pre-paint by
+ * ThemeScript; the @custom-variant below points Tailwind's dark: utilities
+ * at that class.
  */
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* — Surfaces: warm-tinted neutrals, not pure grey — */
+  --background: #fbfaf9;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f4f2f0;
 
-  /* Brand accent, used for CTAs, links, and highlighted UI. */
-  --brand: #4f46e5;
-  --brand-foreground: #ffffff;
+  /* — Text hierarchy — */
+  --foreground: #1a1d21;
+  --foreground-muted: #5c6169;
+  --foreground-subtle: #83898f;
 
-  --muted: #f4f4f5;
-  --muted-foreground: #6b7280;
+  /* — Borders — */
+  --border: #e6e2de;
+  --border-strong: #d2ccc6;
 
-  --border: #e4e4e7;
+  /* — Brand — */
+  --primary: #0f766e;
+  --primary-hover: #115e58;
+  --primary-foreground: #ffffff;
+  --primary-subtle: #e6f2f0;
 
-  /* Translucent surface for the sticky header (glass effect). */
-  --header: rgba(255, 255, 255, 0.8);
+  --secondary: #f4f2f0;
+  --secondary-foreground: #1a1d21;
+
+  --accent: #b45309;
+  --accent-foreground: #ffffff;
+  --accent-subtle: #fdf3e7;
+
+  /* — States — */
+  --success: #15803d;
+  --success-foreground: #ffffff;
+  --success-subtle: #e8f5ec;
+
+  --warning: #a16207;
+  --warning-foreground: #ffffff;
+  --warning-subtle: #fdf6e3;
+
+  --danger: #b42318;
+  --danger-foreground: #ffffff;
+  --danger-subtle: #fdeceb;
+
+  --info: #0e6fa8;
+  --info-foreground: #ffffff;
+  --info-subtle: #e8f2f9;
+
+  /* — Header glass — */
+  --header: rgba(251, 250, 249, 0.82);
+
+  /* — Elevation: tight, layered, low-opacity (never a big blurry blob) — */
+  --shadow-xs: 0 1px 2px 0 rgb(26 29 33 / 0.05);
+  --shadow-sm: 0 1px 2px 0 rgb(26 29 33 / 0.06), 0 1px 3px 0 rgb(26 29 33 / 0.06);
+  --shadow-md: 0 2px 4px -1px rgb(26 29 33 / 0.06), 0 4px 12px -2px rgb(26 29 33 / 0.08);
+  --shadow-lg: 0 4px 8px -2px rgb(26 29 33 / 0.08), 0 12px 28px -4px rgb(26 29 33 / 0.10);
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --background: #14161a;
+  --surface: #1a1d22;
+  --surface-raised: #21252b;
+  --surface-sunken: #101216;
 
-  --brand: #818cf8;
-  --brand-foreground: #0a0a0a;
+  --foreground: #ecedee;
+  --foreground-muted: #9ba1a8;
+  --foreground-subtle: #767c84;
 
-  --muted: #18181b;
-  --muted-foreground: #a1a1aa;
+  --border: #2b2f36;
+  --border-strong: #3c424a;
 
-  --border: #27272a;
+  /* Brand lifts in dark so it stays legible on charcoal (AA on --surface). */
+  --primary: #2dd4bf;
+  --primary-hover: #5eead4;
+  --primary-foreground: #10201e;
+  --primary-subtle: #12312e;
 
-  --header: rgba(10, 10, 10, 0.8);
+  --secondary: #21252b;
+  --secondary-foreground: #ecedee;
+
+  --accent: #f59e0b;
+  --accent-foreground: #1f1400;
+  --accent-subtle: #2a2010;
+
+  --success: #4ade80;
+  --success-foreground: #0c1f13;
+  --success-subtle: #14271a;
+
+  --warning: #fbbf24;
+  --warning-foreground: #201700;
+  --warning-subtle: #262009;
+
+  --danger: #f87171;
+  --danger-foreground: #250e0c;
+  --danger-subtle: #2c1614;
+
+  --info: #60a5fa;
+  --info-foreground: #0b1c2e;
+  --info-subtle: #13212f;
+
+  --header: rgba(20, 22, 26, 0.82);
+
+  /* Shadows carry less weight on dark; borders do the separating. */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.30);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.36);
+  --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.44);
+  --shadow-lg: 0 12px 28px -4px rgb(0 0 0 / 0.52);
 }
 
 @theme inline {
+  /* Surfaces */
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+
+  /* Text */
   --color-foreground: var(--foreground);
-  --color-brand: var(--brand);
-  --color-brand-foreground: var(--brand-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-subtle: var(--foreground-subtle);
+
+  /* Borders */
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  /* Brand */
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-subtle: var(--primary-subtle);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-subtle: var(--accent-subtle);
+
+  /* States */
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-subtle: var(--success-subtle);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-subtle: var(--warning-subtle);
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-danger-subtle: var(--danger-subtle);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-info-subtle: var(--info-subtle);
+
   --color-header: var(--header);
 
+  /* Legacy aliases — keep pre-M12 utility names resolving to the new
+     tokens so no component breaks during/after the migration. */
+  --color-brand: var(--primary);
+  --color-brand-foreground: var(--primary-foreground);
+  --color-muted: var(--surface-sunken);
+  --color-muted-foreground: var(--foreground-muted);
+
+  /* Type: Geist for UI/display, Geist Mono for data and code. */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Micro-animation for content appearing (previews, result cards).
-     Always used behind Tailwind's motion-safe: variant so users with
-     prefers-reduced-motion never see it. */
-  --animate-fade-in: fade-in 300ms ease both;
+  /* Radii: cards/controls share one soft family; pills stay fully round. */
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* Elevation */
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  /* Motion — short, eased, and always behind motion-safe: */
+  --animate-fade-in: fade-in 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-rise-in: rise-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(2px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(2px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  /* Slightly tightened tracking on UI text reads more considered than
+     Tailwind's default at these sizes. */
+  letter-spacing: -0.006em;
 }
 
-/* Smooth color transition when toggling theme, disabled for users who
-   prefer reduced motion (accessibility quality floor). */
+/* Headings: tighter tracking as size grows, so display type feels set
+   rather than merely scaled up. */
+h1, h2, h3 {
+  letter-spacing: -0.021em;
+}
+
+/* Numeric data (sizes, counts, timings) aligns in columns everywhere. */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  body,
-  header,
-  footer {
-    transition: background-color 150ms ease, border-color 150ms ease;
+  body, header, footer {
+    transition: background-color 200ms ease, border-color 200ms ease;
   }
+}
+
+/* Signature: a faint engineering-grid wash used behind the hero only —
+   the "workshop surface" the product's work happens on. */
+.workshop-grid {
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
 }

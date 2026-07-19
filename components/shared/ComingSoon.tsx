@@ -43,7 +43,7 @@ export function ComingSoon({
       as="section"
       className="flex min-h-[60vh] flex-col items-center justify-center gap-6 py-24 text-center"
     >
-      <Badge variant="brand">
+      <Badge variant="primary">
         {label} · Coming soon
       </Badge>
 
@@ -51,7 +51,7 @@ export function ComingSoon({
         {title}
       </h1>
 
-      <p className="max-w-xl text-balance text-lg text-muted-foreground">
+      <p className="max-w-xl text-balance text-lg text-foreground-muted">
         {description}
       </p>
 

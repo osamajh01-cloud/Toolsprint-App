@@ -71,7 +71,7 @@ export function ToolsDirectory() {
           <h2 id="all-tools-heading" className="text-lg font-semibold">
             {isFiltering ? "Results" : "All tools"}
           </h2>
-          <p aria-live="polite" className="text-sm text-muted-foreground">
+          <p aria-live="polite" className="text-sm text-foreground-muted">
             {results.length} {results.length === 1 ? "tool" : "tools"}
           </p>
         </div>

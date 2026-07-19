@@ -31,14 +31,14 @@ export function ToolOutput({
   return (
     <section aria-label={label} className="flex flex-col gap-3">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm font-medium text-muted-foreground">{label}</p>
+        <p className="text-sm font-medium text-foreground-muted">{label}</p>
         <CopyButton text={value} disabled={!hasValue} />
       </div>
 
       <div
-        className={`min-h-32 w-full whitespace-pre-wrap break-words rounded-xl border border-border bg-muted/40 p-4 text-base leading-relaxed ${
+        className={`min-h-32 w-full whitespace-pre-wrap break-words rounded-xl border border-border bg-surface-sunken p-4 text-base leading-relaxed ${
           mono ? "font-mono text-sm" : ""
-        } ${hasValue ? "text-foreground" : "text-muted-foreground"}`}
+        } ${hasValue ? "text-foreground" : "text-foreground-muted"}`}
       >
         {hasValue ? value : placeholder}
       </div>

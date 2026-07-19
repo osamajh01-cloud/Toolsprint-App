@@ -120,7 +120,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
             </h2>
             <Link
               href={`/tools/category/${category.slug}`}
-              className="rounded-sm text-sm font-medium text-brand transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+              className="rounded-sm text-sm font-medium text-primary transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               View all {category.title.toLowerCase()} tools
             </Link>

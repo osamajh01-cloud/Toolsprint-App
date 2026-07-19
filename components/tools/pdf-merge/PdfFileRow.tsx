@@ -54,20 +54,20 @@ export function PdfFileRow({
       }}
       onDragEnd={onDragEnd}
       onDrop={(event) => event.preventDefault()}
-      className={`flex flex-wrap items-center gap-3 rounded-xl border border-border p-3 transition-colors hover:border-brand/40 motion-safe:animate-fade-in ${
+      className={`flex flex-wrap items-center gap-3 rounded-xl border border-border p-3 transition-colors hover:border-primary/40 motion-safe:animate-fade-in ${
         isDragging ? "opacity-50" : ""
       }`}
     >
       {/* Position + drag handle */}
       <span className="flex items-center gap-2">
-        <span className="w-6 text-center text-sm font-semibold tabular-nums text-muted-foreground">
+        <span className="w-6 text-center text-sm font-semibold tabular-nums text-foreground-muted">
           {index + 1}
         </span>
         <svg
           aria-hidden="true"
           viewBox="0 0 24 24"
           fill="currentColor"
-          className="size-4 cursor-grab text-muted-foreground"
+          className="size-4 cursor-grab text-foreground-muted"
         >
           <circle cx="9" cy="6" r="1.5" />
           <circle cx="15" cy="6" r="1.5" />
@@ -85,7 +85,7 @@ export function PdfFileRow({
         </p>
         <div className="mt-1 flex flex-wrap gap-1.5">
           {item.status === "reading" && (
-            <span role="status" className="text-xs text-muted-foreground">
+            <span role="status" className="text-xs text-foreground-muted">
               Reading…
             </span>
           )}
@@ -95,7 +95,7 @@ export function PdfFileRow({
             </Badge>
           )}
           {item.status === "error" && (
-            <span role="alert" className="text-xs text-muted-foreground">
+            <span role="alert" className="text-xs text-foreground-muted">
               <span className="font-semibold text-foreground">
                 Can&apos;t read this PDF
               </span>{" "}

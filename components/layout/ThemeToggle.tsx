@@ -90,7 +90,7 @@ export function ThemeToggle() {
             : "Switch to dark theme"
           : "Toggle theme"
       }
-      className="inline-flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+      className="inline-flex size-9 items-center justify-center rounded-full text-foreground-muted transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
     >
       {/* Neutral placeholder pre-mount keeps SSR/client markup identical. */}
       {mounted ? (isDark ? <SunIcon /> : <MoonIcon />) : <SunIcon />}

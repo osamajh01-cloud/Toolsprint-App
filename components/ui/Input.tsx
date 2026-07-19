@@ -34,7 +34,7 @@ export function Input({
     <div className={`flex flex-col gap-1.5 ${className}`}>
       <label
         htmlFor={id}
-        className="text-sm font-medium text-muted-foreground"
+        className="text-sm font-medium text-foreground-muted"
       >
         {label}
       </label>
@@ -42,10 +42,10 @@ export function Input({
         id={id}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-11 w-full rounded-xl border border-border bg-background px-4 text-base text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
+        className="h-11 w-full rounded-xl border border-border bg-surface px-4 text-base text-foreground placeholder:text-foreground-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
         {...rest}
       />
-      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+      {hint && <p className="text-xs text-foreground-muted">{hint}</p>}
     </div>
   );
 }

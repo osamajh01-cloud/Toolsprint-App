@@ -40,7 +40,7 @@ export function ToolTextarea({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <label
           htmlFor={id}
-          className="text-sm font-medium text-muted-foreground"
+          className="text-sm font-medium text-foreground-muted"
         >
           {label}
         </label>
@@ -54,7 +54,7 @@ export function ToolTextarea({
         placeholder={placeholder}
         rows={rows}
         spellCheck={false}
-        className={`w-full resize-y rounded-xl border border-border bg-background p-4 text-base leading-relaxed text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30 ${
+        className={`w-full resize-y rounded-xl border border-border bg-surface p-4 text-base leading-relaxed text-foreground placeholder:text-foreground-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25 ${
           mono ? "font-mono text-sm" : ""
         }`}
       />

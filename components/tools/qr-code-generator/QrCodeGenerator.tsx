@@ -302,7 +302,7 @@ export function QrCodeGenerator() {
             value={level}
             onChange={setLevel}
           />
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-foreground-muted">
             Higher error correction survives more damage or overlaid logos,
             but makes the code denser.
           </p>
@@ -311,17 +311,17 @@ export function QrCodeGenerator() {
 
       {/* Right: preview + actions */}
       <div className="flex flex-col gap-4">
-        <p className="text-sm font-medium text-muted-foreground">Preview</p>
+        <p className="text-sm font-medium text-foreground-muted">Preview</p>
 
         {renderError && (
           <div
             role="alert"
-            className="rounded-xl border border-border bg-muted/40 p-4 text-sm"
+            className="rounded-xl border border-border bg-surface-sunken p-4 text-sm"
           >
             <p className="font-semibold text-foreground">
               Can&apos;t generate this QR code
             </p>
-            <p className="mt-1 text-muted-foreground">{renderError}</p>
+            <p className="mt-1 text-foreground-muted">{renderError}</p>
           </div>
         )}
 
@@ -340,7 +340,7 @@ export function QrCodeGenerator() {
           {rendering && (
             <p
               role="status"
-              className="absolute bottom-2 right-3 text-xs text-muted-foreground"
+              className="absolute bottom-2 right-3 text-xs text-foreground-muted"
             >
               Updating…
             </p>
@@ -385,7 +385,7 @@ export function QrCodeGenerator() {
         </div>
 
         {hasPayload && (
-          <p className="break-all font-mono text-xs text-muted-foreground">
+          <p className="break-all font-mono text-xs text-foreground-muted">
             {payload}
           </p>
         )}

@@ -16,7 +16,7 @@ function ToolLoading() {
     <div
       role="status"
       aria-label="Loading tool"
-      className="flex min-h-64 animate-pulse items-center justify-center rounded-xl border border-border bg-muted/40 text-sm text-muted-foreground"
+      className="flex min-h-64 animate-pulse items-center justify-center rounded-xl border border-border bg-surface-sunken text-sm text-foreground-muted"
     >
       Loading tool…
     </div>

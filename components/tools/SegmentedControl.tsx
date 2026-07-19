@@ -37,10 +37,10 @@ export function SegmentedControl<T extends string>({
             role="radio"
             aria-checked={active}
             onClick={() => onChange(option.value)}
-            className={`inline-flex items-center rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand ${
+            className={`inline-flex items-center rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
               active
-                ? "border-brand bg-brand text-brand-foreground"
-                : "border-border text-muted-foreground hover:border-brand/40 hover:text-foreground"
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border text-foreground-muted hover:border-primary/40 hover:text-foreground"
             }`}
           >
             {option.label}

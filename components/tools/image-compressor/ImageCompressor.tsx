@@ -361,7 +361,7 @@ export function ImageCompressor() {
         onDragLeave={() => setDragActive(false)}
         onDrop={onDrop}
         className={`flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed px-6 py-12 text-center transition-colors ${
-          dragActive ? "border-brand bg-brand/5" : "border-border bg-muted/30"
+          dragActive ? "border-primary bg-primary-subtle" : "border-border bg-surface-sunken"
         }`}
       >
         <p className="text-lg font-semibold">
@@ -369,7 +369,7 @@ export function ImageCompressor() {
             ? "+ Add more images"
             : "Drop JPEG, PNG, or WebP images here"}
         </p>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-foreground-muted">
           …or paste from the clipboard (Ctrl/Cmd&nbsp;+&nbsp;V). Up to{" "}
           {MAX_FILE_MB} MB per file. Images never leave your device.
         </p>
@@ -392,7 +392,7 @@ export function ImageCompressor() {
 
       {/* Empty state: privacy story + illustration, until images arrive */}
       {items.length === 0 && (
-        <div className="flex flex-col items-center gap-5 rounded-xl border border-border bg-muted/20 px-6 py-10 text-center motion-safe:animate-fade-in">
+        <div className="flex flex-col items-center gap-5 rounded-xl border border-border bg-surface-sunken px-6 py-10 text-center motion-safe:animate-fade-in">
           {/* Illustration: a photo shrinking, drawn with theme tokens */}
           <svg
             aria-hidden="true"
@@ -411,32 +411,32 @@ export function ImageCompressor() {
               rx="8"
               className="stroke-border fill-background"
             />
-            <circle cx="30" cy="28" r="7" className="stroke-brand" />
-            <path d="m14 62 20-20 14 12 16-16 22 24" className="stroke-brand" />
+            <circle cx="30" cy="28" r="7" className="stroke-primary" />
+            <path d="m14 62 20-20 14 12 16-16 22 24" className="stroke-primary" />
             <rect
               x="112"
               y="34"
               width="42"
               height="32"
               rx="6"
-              className="stroke-brand fill-brand/10"
+              className="stroke-primary fill-primary-subtle"
             />
-            <circle cx="124" cy="45" r="3.5" className="stroke-brand" />
-            <path d="m116 62 10-10 7 6 8-8 11 12" className="stroke-brand" />
+            <circle cx="124" cy="45" r="3.5" className="stroke-primary" />
+            <path d="m116 62 10-10 7 6 8-8 11 12" className="stroke-primary" />
             <path d="M94 50h12m0 0-5-5m5 5-5 5" className="stroke-foreground" />
           </svg>
 
-          <ul className="flex flex-col gap-1.5 text-sm text-muted-foreground sm:flex-row sm:gap-6">
+          <ul className="flex flex-col gap-1.5 text-sm text-foreground-muted sm:flex-row sm:gap-6">
             <li className="flex items-center justify-center gap-1.5">
-              <span aria-hidden="true" className="text-brand">•</span> Nothing
+              <span aria-hidden="true" className="text-primary">•</span> Nothing
               leaves your device
             </li>
             <li className="flex items-center justify-center gap-1.5">
-              <span aria-hidden="true" className="text-brand">•</span> No
+              <span aria-hidden="true" className="text-primary">•</span> No
               uploads, no accounts
             </li>
             <li className="flex items-center justify-center gap-1.5">
-              <span aria-hidden="true" className="text-brand">•</span> Fast
+              <span aria-hidden="true" className="text-primary">•</span> Fast
               in-browser processing
             </li>
           </ul>
@@ -447,13 +447,13 @@ export function ImageCompressor() {
       {rejected.length > 0 && (
         <div
           role="alert"
-          className="rounded-xl border border-border bg-muted/40 p-4 text-sm"
+          className="rounded-xl border border-border bg-surface-sunken p-4 text-sm"
         >
           <p className="font-semibold text-foreground">
             {rejected.length} {rejected.length === 1 ? "file was" : "files were"}{" "}
             skipped
           </p>
-          <ul className="mt-1 list-inside list-disc text-muted-foreground">
+          <ul className="mt-1 list-inside list-disc text-foreground-muted">
             {rejected.map((line) => (
               <li key={line}>{line}</li>
             ))}
@@ -497,7 +497,7 @@ export function ImageCompressor() {
             }}
           />
         )}
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-foreground-muted">
           {mode === "auto"
             ? "Auto targets roughly half the original file size per image."
             : "Changing quality recompresses every image below, live."}
@@ -506,8 +506,8 @@ export function ImageCompressor() {
 
       {/* Totals + batch actions */}
       {items.length > 0 && (
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-muted/30 p-4">
-          <p aria-live="polite" className="text-sm text-muted-foreground">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-surface-sunken p-4">
+          <p aria-live="polite" className="text-sm text-foreground-muted">
             {anyCompressing ? (
               <span role="status">Compressing {items.length === 1 ? "image" : "images"}…</span>
             ) : totals.doneCount > 0 ? (

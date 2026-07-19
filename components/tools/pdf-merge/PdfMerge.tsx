@@ -257,13 +257,13 @@ export function PdfMerge() {
           }
         }}
         className={`flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed px-6 py-12 text-center transition-colors ${
-          dragActive ? "border-brand bg-brand/5" : "border-border bg-muted/30"
+          dragActive ? "border-primary bg-primary-subtle" : "border-border bg-surface-sunken"
         }`}
       >
         <p className="text-lg font-semibold">
           {items.length > 0 ? "+ Add more PDFs" : "Drop PDF files here"}
         </p>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-foreground-muted">
           …or paste from the clipboard where your browser supports it. Up to{" "}
           {MAX_FILE_MB} MB per file. Files never leave your device.
         </p>
@@ -286,7 +286,7 @@ export function PdfMerge() {
 
       {/* Empty state: illustration + privacy bullets */}
       {items.length === 0 && phase === "select" && (
-        <div className="flex flex-col items-center gap-5 rounded-xl border border-border bg-muted/20 px-6 py-10 text-center motion-safe:animate-fade-in">
+        <div className="flex flex-col items-center gap-5 rounded-xl border border-border bg-surface-sunken px-6 py-10 text-center motion-safe:animate-fade-in">
           {/* Two documents flowing into one */}
           <svg
             aria-hidden="true"
@@ -305,27 +305,27 @@ export function PdfMerge() {
             <path
               d="M10 42a4 4 0 0 1 4-4h26l10 10v34a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4z"
               transform="translate(6 6)"
-              className="stroke-brand/50 fill-background"
+              className="stroke-primary/50 fill-background"
             />
             <path d="M72 48h16m0 0-5-5m5 5-5 5" className="stroke-foreground" />
             <path
               d="M104 20a4 4 0 0 1 4-4h30l12 12v44a4 4 0 0 1-4 4h-38a4 4 0 0 1-4-4z"
-              className="stroke-brand fill-brand/10"
+              className="stroke-primary fill-primary-subtle"
             />
-            <path d="M138 16v12h12M112 42h26M112 50h26M112 58h20" className="stroke-brand" />
+            <path d="M138 16v12h12M112 42h26M112 50h26M112 58h20" className="stroke-primary" />
           </svg>
 
-          <ul className="flex flex-col gap-1.5 text-sm text-muted-foreground sm:flex-row sm:gap-6">
+          <ul className="flex flex-col gap-1.5 text-sm text-foreground-muted sm:flex-row sm:gap-6">
             <li className="flex items-center justify-center gap-1.5">
-              <span aria-hidden="true" className="text-brand">•</span> Nothing
+              <span aria-hidden="true" className="text-primary">•</span> Nothing
               leaves your device
             </li>
             <li className="flex items-center justify-center gap-1.5">
-              <span aria-hidden="true" className="text-brand">•</span> No
+              <span aria-hidden="true" className="text-primary">•</span> No
               uploads, no accounts
             </li>
             <li className="flex items-center justify-center gap-1.5">
-              <span aria-hidden="true" className="text-brand">•</span> Original
+              <span aria-hidden="true" className="text-primary">•</span> Original
               quality preserved
             </li>
           </ul>
@@ -336,13 +336,13 @@ export function PdfMerge() {
       {rejected.length > 0 && (
         <div
           role="alert"
-          className="rounded-xl border border-border bg-muted/40 p-4 text-sm"
+          className="rounded-xl border border-border bg-surface-sunken p-4 text-sm"
         >
           <p className="font-semibold text-foreground">
             {rejected.length} {rejected.length === 1 ? "file was" : "files were"}{" "}
             skipped
           </p>
-          <ul className="mt-1 list-inside list-disc text-muted-foreground">
+          <ul className="mt-1 list-inside list-disc text-foreground-muted">
             {rejected.map((line) => (
               <li key={line}>{line}</li>
             ))}
@@ -354,7 +354,7 @@ export function PdfMerge() {
       {items.length > 0 && (
         <section aria-label="Files to merge" className="flex flex-col gap-3">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-foreground-muted">
               <span className="font-semibold text-foreground">
                 {items.length} {items.length === 1 ? "file" : "files"}
               </span>
@@ -387,7 +387,7 @@ export function PdfMerge() {
 
       {/* Merge error */}
       {mergeError && (
-        <p role="alert" className="text-sm text-muted-foreground">
+        <p role="alert" className="text-sm text-foreground-muted">
           <span className="font-semibold text-foreground">Merge failed:</span>{" "}
           {mergeError}
         </p>
@@ -405,7 +405,7 @@ export function PdfMerge() {
               : `Merge ${readyItems.length} PDFs`}
           </Button>
           {readyItems.length < 2 && phase === "select" && (
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-foreground-muted">
               Add at least two readable PDFs to merge.
             </p>
           )}
@@ -416,10 +416,10 @@ export function PdfMerge() {
               aria-valuemin={0}
               aria-valuemax={progress.total}
               aria-valuenow={progress.current}
-              className="h-1.5 w-full overflow-hidden rounded-full bg-muted"
+              className="h-1.5 w-full overflow-hidden rounded-full bg-surface-sunken"
             >
               <div
-                className="h-full rounded-full bg-brand transition-[width] duration-200"
+                className="h-full rounded-full bg-primary transition-[width] duration-200"
                 style={{
                   width: `${progress.total ? (progress.current / progress.total) * 100 : 0}%`,
                 }}
@@ -433,10 +433,10 @@ export function PdfMerge() {
       {phase === "done" && output && (
         <section
           aria-label="Merged PDF"
-          className="flex flex-col gap-5 rounded-xl border border-border bg-muted/20 p-6 motion-safe:animate-fade-in"
+          className="flex flex-col gap-5 rounded-xl border border-border bg-surface-sunken p-6 motion-safe:animate-fade-in"
         >
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="brand">✓ Merged</Badge>
+            <Badge variant="primary">✓ Merged</Badge>
             <p className="font-mono text-sm text-foreground">
               {output.filename}
             </p>

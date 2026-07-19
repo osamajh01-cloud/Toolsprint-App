@@ -108,16 +108,16 @@ export function CompareSlider({
       />
 
       {/* Corner labels */}
-      <span className="pointer-events-none absolute left-2 top-2 rounded-full bg-background/85 px-2 py-0.5 text-[11px] font-medium">
+      <span className="pointer-events-none absolute left-2 top-2 rounded-full bg-surface/85 px-2 py-0.5 text-[11px] font-medium">
         {beforeLabel}
       </span>
-      <span className="pointer-events-none absolute right-2 top-2 rounded-full bg-background/85 px-2 py-0.5 text-[11px] font-medium">
+      <span className="pointer-events-none absolute right-2 top-2 rounded-full bg-surface/85 px-2 py-0.5 text-[11px] font-medium">
         {afterLabel}
       </span>
 
       {/* Divider + keyboard handle */}
       <div
-        className="pointer-events-none absolute inset-y-0 w-0.5 -translate-x-1/2 bg-brand"
+        className="pointer-events-none absolute inset-y-0 w-0.5 -translate-x-1/2 bg-primary"
         style={{ left: `${position}%` }}
         aria-hidden="true"
       />
@@ -131,7 +131,7 @@ export function CompareSlider({
         aria-valuenow={position}
         aria-valuetext={`${position}% ${beforeLabel.toLowerCase()}`}
         onKeyDown={onHandleKeyDown}
-        className="absolute top-1/2 flex size-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background shadow-sm transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand motion-reduce:transform-none"
+        className="absolute top-1/2 flex size-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-surface shadow-sm transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-reduce:transform-none"
         style={{ left: `${position}%` }}
       >
         <svg
@@ -142,7 +142,7 @@ export function CompareSlider({
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="size-4 text-muted-foreground"
+          className="size-4 text-foreground-muted"
         >
           <path d="m9 8-4 4 4 4M15 8l4 4-4 4" />
         </svg>

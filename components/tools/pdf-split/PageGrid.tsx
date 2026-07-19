@@ -81,8 +81,8 @@ export function PageGrid({
         const tile = (
           <>
             <span
-              className={`flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-md border bg-background ${
-                active ? "border-brand" : "border-border"
+              className={`flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-md border bg-surface ${
+                active ? "border-primary" : "border-border"
               }`}
             >
               {thumb ? (
@@ -93,14 +93,14 @@ export function PageGrid({
                   className="h-full w-full object-contain motion-safe:animate-fade-in"
                 />
               ) : (
-                <span className="text-[10px] text-muted-foreground">
+                <span className="text-[10px] text-foreground-muted">
                   {page}
                 </span>
               )}
             </span>
             <span
               className={`text-xs tabular-nums ${
-                active ? "font-semibold text-foreground" : "text-muted-foreground"
+                active ? "font-semibold text-foreground" : "text-foreground-muted"
               }`}
             >
               {page}
@@ -138,7 +138,7 @@ export function PageGrid({
                   onToggle?.(page, !active);
                 }
               }}
-              className={`flex w-full flex-col items-center gap-1 rounded-lg p-1 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand ${
+              className={`flex w-full flex-col items-center gap-1 rounded-lg p-1 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                 active ? "" : "opacity-45 hover:opacity-80"
               }`}
               style={{ touchAction: "none" }}

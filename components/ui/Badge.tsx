@@ -3,18 +3,33 @@ import type { ReactNode } from "react";
 /**
  * components/ui/Badge.tsx
  *
- * Small label primitive. Used in Milestone 2 for "Soon" markers next to
- * unlaunched nav items; will be reused for category tags on ToolCards
- * (Milestone 3) and "Pro" plan badges (Milestone 14). Style-only — no
- * business logic.
+ * Small status label. Variants map to the semantic state tokens, so a
+ * "danger" badge and a danger button draw from the same color — the state
+ * palette is defined once in globals.css.
+ *
+ * Subtle backgrounds (not solid fills) keep badges quiet next to buttons;
+ * each pairing was contrast-checked against its subtle surface.
  */
 
-type Variant = "default" | "brand" | "outline";
+type Variant =
+  | "neutral"
+  | "primary"
+  | "accent"
+  | "success"
+  | "warning"
+  | "danger"
+  | "info"
+  | "outline";
 
 const variantStyles: Record<Variant, string> = {
-  default: "bg-muted text-muted-foreground",
-  brand: "bg-brand/10 text-brand",
-  outline: "border border-border text-muted-foreground",
+  neutral: "bg-surface-sunken text-foreground-muted",
+  primary: "bg-primary-subtle text-primary",
+  accent: "bg-accent-subtle text-accent",
+  success: "bg-success-subtle text-success",
+  warning: "bg-warning-subtle text-warning",
+  danger: "bg-danger-subtle text-danger",
+  info: "bg-info-subtle text-info",
+  outline: "border border-border text-foreground-muted",
 };
 
 interface BadgeProps {
@@ -25,7 +40,7 @@ interface BadgeProps {
 
 export function Badge({
   children,
-  variant = "default",
+  variant = "neutral",
   className = "",
 }: BadgeProps) {
   return (

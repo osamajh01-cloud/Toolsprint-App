@@ -23,7 +23,7 @@ export function EmptyState({ title, description, action }: EmptyStateProps) {
       role="status"
       className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border px-6 py-16 text-center"
     >
-      <span className="inline-flex size-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
+      <span className="inline-flex size-12 items-center justify-center rounded-full bg-surface-sunken text-foreground-muted">
         <svg
           aria-hidden="true"
           viewBox="0 0 24 24"
@@ -39,7 +39,7 @@ export function EmptyState({ title, description, action }: EmptyStateProps) {
       </span>
 
       <p className="text-lg font-semibold">{title}</p>
-      <p className="max-w-sm text-sm text-muted-foreground">{description}</p>
+      <p className="max-w-sm text-sm text-foreground-muted">{description}</p>
 
       {action && <div className="mt-2">{action}</div>}
     </div>

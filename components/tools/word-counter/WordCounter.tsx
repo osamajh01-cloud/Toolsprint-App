@@ -68,7 +68,7 @@ export function WordCounter() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <label
             htmlFor="word-counter-input"
-            className="text-sm font-medium text-muted-foreground"
+            className="text-sm font-medium text-foreground-muted"
           >
             Paste or type your text
           </label>
@@ -103,7 +103,7 @@ export function WordCounter() {
           placeholder="Start typing, or paste anything — an email, an essay, a blog post…"
           rows={10}
           spellCheck={false}
-          className="w-full resize-y rounded-xl border border-border bg-background p-4 text-base leading-relaxed text-foreground placeholder:text-muted-foreground focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
+          className="w-full resize-y rounded-xl border border-border bg-surface p-4 text-base leading-relaxed text-foreground placeholder:text-foreground-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
         />
 
         {/* Length guide */}
@@ -115,14 +115,14 @@ export function WordCounter() {
             aria-valuemax={LENGTH_GUIDE}
             aria-valuenow={Math.min(stats.characters, LENGTH_GUIDE)}
             aria-valuetext={`${stats.characters.toLocaleString()} of ${LENGTH_GUIDE.toLocaleString()} characters`}
-            className="h-1.5 w-full overflow-hidden rounded-full bg-muted"
+            className="h-1.5 w-full overflow-hidden rounded-full bg-surface-sunken"
           >
             <div
-              className="h-full rounded-full bg-brand transition-[width] duration-150"
+              className="h-full rounded-full bg-primary transition-[width] duration-150"
               style={{ width: `${lengthPercent}%` }}
             />
           </div>
-          <p className="text-xs tabular-nums text-muted-foreground">
+          <p className="text-xs tabular-nums text-foreground-muted">
             {stats.characters.toLocaleString()} /{" "}
             {LENGTH_GUIDE.toLocaleString()} characters
             {stats.characters > LENGTH_GUIDE && " — keep going, no limit"}
@@ -169,7 +169,7 @@ export function WordCounter() {
           </dl>
 
           <div>
-            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-foreground-muted">
               Insights
             </h2>
             <dl className="grid grid-cols-2 gap-3 sm:grid-cols-3">

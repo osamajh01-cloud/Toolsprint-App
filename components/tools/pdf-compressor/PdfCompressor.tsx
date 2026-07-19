@@ -290,13 +290,13 @@ export function PdfCompressor() {
           if (file) void loadFile(file);
         }}
         className={`flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed px-6 py-10 text-center transition-colors ${
-          dragActive ? "border-brand bg-brand/5" : "border-border bg-muted/30"
+          dragActive ? "border-primary bg-primary-subtle" : "border-border bg-surface-sunken"
         }`}
       >
         <p className="text-lg font-semibold">
           {loaded ? "Drop a different PDF to replace it" : "Drop a PDF here"}
         </p>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-foreground-muted">
           …or paste from the clipboard where supported. Up to {MAX_FILE_MB} MB.
           The file never leaves your device.
         </p>
@@ -319,7 +319,7 @@ export function PdfCompressor() {
 
       {/* Empty state */}
       {phase === "empty" && !error && (
-        <div className="flex flex-col items-center gap-5 rounded-xl border border-border bg-muted/20 px-6 py-10 text-center motion-safe:animate-fade-in">
+        <div className="flex flex-col items-center gap-5 rounded-xl border border-border bg-surface-sunken px-6 py-10 text-center motion-safe:animate-fade-in">
           {/* A heavy document pressed into a lighter one */}
           <svg
             aria-hidden="true"
@@ -338,23 +338,23 @@ export function PdfCompressor() {
             <path d="M78 48h14m0 0-5-5m5 5-5 5" className="stroke-foreground" />
             <path
               d="M104 28a4 4 0 0 1 4-4h22l10 10v34a4 4 0 0 1-4 4h-28a4 4 0 0 1-4-4z"
-              className="stroke-brand fill-brand/10"
+              className="stroke-primary fill-primary-subtle"
             />
-            <path d="M130 24v10h10M112 46h18M112 54h18" className="stroke-brand" />
-            <path d="M112 12v6M120 8v10M128 12v6" className="stroke-brand/60" />
+            <path d="M130 24v10h10M112 46h18M112 54h18" className="stroke-primary" />
+            <path d="M112 12v6M120 8v10M128 12v6" className="stroke-primary/60" />
           </svg>
 
-          <ul className="flex flex-col gap-1.5 text-sm text-muted-foreground sm:flex-row sm:gap-6">
+          <ul className="flex flex-col gap-1.5 text-sm text-foreground-muted sm:flex-row sm:gap-6">
             <li className="flex items-center justify-center gap-1.5">
-              <span aria-hidden="true" className="text-brand">•</span> Nothing
+              <span aria-hidden="true" className="text-primary">•</span> Nothing
               leaves your device
             </li>
             <li className="flex items-center justify-center gap-1.5">
-              <span aria-hidden="true" className="text-brand">•</span> Text stays
+              <span aria-hidden="true" className="text-primary">•</span> Text stays
               sharp &amp; selectable
             </li>
             <li className="flex items-center justify-center gap-1.5">
-              <span aria-hidden="true" className="text-brand">•</span> No
+              <span aria-hidden="true" className="text-primary">•</span> No
               uploads, no accounts
             </li>
           </ul>
@@ -362,7 +362,7 @@ export function PdfCompressor() {
       )}
 
       {error && (
-        <p role="alert" className="text-sm text-muted-foreground">
+        <p role="alert" className="text-sm text-foreground-muted">
           <span className="font-semibold text-foreground">
             Can&apos;t continue:
           </span>{" "}
@@ -371,7 +371,7 @@ export function PdfCompressor() {
       )}
 
       {phase === "loading" && (
-        <p role="status" className="text-sm text-muted-foreground">
+        <p role="status" className="text-sm text-foreground-muted">
           Reading the document…
         </p>
       )}
@@ -379,7 +379,7 @@ export function PdfCompressor() {
       {loaded && phase !== "empty" && phase !== "loading" && (
         <>
           {/* File info */}
-          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-muted/30 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-surface-sunken p-4">
             <div className="min-w-0">
               <p className="truncate font-medium" title={loaded.name}>
                 {loaded.name}
@@ -463,7 +463,7 @@ export function PdfCompressor() {
                 />
               </fieldset>
 
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-foreground-muted">
                 Pages are never rasterized — text and vector graphics keep
                 their original sharpness. Only embedded JPEG images are
                 recompressed.
@@ -484,10 +484,10 @@ export function PdfCompressor() {
                   aria-valuemin={0}
                   aria-valuemax={stage?.total || 1}
                   aria-valuenow={stage?.stage === "images" ? stage.current : 0}
-                  className="h-1.5 w-full overflow-hidden rounded-full bg-muted"
+                  className="h-1.5 w-full overflow-hidden rounded-full bg-surface-sunken"
                 >
                   <div
-                    className={`h-full rounded-full bg-brand transition-[width] duration-200 ${
+                    className={`h-full rounded-full bg-primary transition-[width] duration-200 ${
                       stage?.stage !== "images" ? "animate-pulse" : ""
                     }`}
                     style={{
@@ -506,10 +506,10 @@ export function PdfCompressor() {
           {phase === "done" && result && (
             <section
               aria-label="Compression result"
-              className="flex flex-col gap-5 rounded-xl border border-border bg-muted/20 p-6 motion-safe:animate-fade-in"
+              className="flex flex-col gap-5 rounded-xl border border-border bg-surface-sunken p-6 motion-safe:animate-fade-in"
             >
               <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="brand">
+                <Badge variant="primary">
                   {savedPct > 0 ? `✓ −${savedPct}%` : "Already optimized"}
                 </Badge>
                 <p className="font-mono text-sm">{result.filename}</p>
@@ -564,7 +564,7 @@ export function PdfCompressor() {
                 />
               </dl>
 
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-foreground-muted">
                 {result.imagesFound > 0
                   ? `${result.imagesRecompressed} of ${result.imagesFound} embedded ${
                       result.imagesFound === 1 ? "image" : "images"

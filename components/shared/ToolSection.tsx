@@ -53,7 +53,7 @@ export function ToolSection({
             {title}
           </h2>
           {description && (
-            <p className="max-w-2xl text-sm text-muted-foreground">
+            <p className="max-w-2xl text-sm text-foreground-muted">
               {description}
             </p>
           )}
@@ -61,7 +61,7 @@ export function ToolSection({
         {action && (
           <Link
             href={action.href}
-            className="rounded-sm text-sm font-medium text-brand transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+            className="rounded-sm text-sm font-medium text-primary transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             {action.label}
           </Link>

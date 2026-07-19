@@ -78,7 +78,7 @@ export function ImageItemCard({
   const supportsAlpha = item.file.type !== "image/jpeg";
 
   return (
-    <li className="flex flex-col gap-4 rounded-xl border border-border p-4 transition-colors hover:border-brand/40 motion-safe:animate-fade-in">
+    <li className="flex flex-col gap-4 rounded-xl border border-border p-4 transition-colors hover:border-primary/40 motion-safe:animate-fade-in">
       {/* Header: filename + remove */}
       <div className="flex flex-wrap items-start justify-between gap-3">
         <p className="min-w-0 truncate font-medium" title={item.file.name}>
@@ -148,10 +148,10 @@ export function ImageItemCard({
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={item.progress}
-          className="h-1 w-full overflow-hidden rounded-full bg-muted"
+          className="h-1 w-full overflow-hidden rounded-full bg-surface-sunken"
         >
           <div
-            className="h-full rounded-full bg-brand transition-[width] duration-200"
+            className="h-full rounded-full bg-primary transition-[width] duration-200"
             style={{ width: `${item.progress}%` }}
           />
         </div>
@@ -159,7 +159,7 @@ export function ImageItemCard({
 
       {/* Error state */}
       {item.status === "error" && (
-        <p role="alert" className="text-sm text-muted-foreground">
+        <p role="alert" className="text-sm text-foreground-muted">
           <span className="font-semibold text-foreground">
             Couldn&apos;t compress:
           </span>{" "}
@@ -214,7 +214,7 @@ export function ImageItemCard({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div aria-live="polite" className="flex flex-wrap items-center gap-2">
           {done && saved !== null && (
-            <Badge variant="brand">
+            <Badge variant="primary">
               {saved > 0 ? `−${saved}%` : "Already optimized"}
             </Badge>
           )}

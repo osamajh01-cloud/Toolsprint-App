@@ -22,11 +22,11 @@ import { siteConfig } from "@/config/site";
 
 function FooterLink({ item }: { item: NavItem }) {
   const linkStyles =
-    "text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm";
+    "text-sm text-foreground-muted transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm";
 
   if (item.disabled) {
     return (
-      <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground/60">
+      <span className="inline-flex items-center gap-1.5 text-sm text-foreground-subtle">
         {item.title}
         <Badge>Soon</Badge>
       </span>
@@ -64,7 +64,7 @@ export function Footer() {
           {/* Brand block spans two columns on large screens. */}
           <div className="col-span-2 flex flex-col gap-3 sm:col-span-3 lg:col-span-2">
             <Logo />
-            <p className="max-w-xs text-sm text-muted-foreground">
+            <p className="max-w-xs text-sm text-foreground-muted">
               Fast, free, browser-based tools for developers, writers, and
               everyday tasks. No sign-up required.
             </p>
@@ -85,10 +85,10 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-start justify-between gap-2 border-t border-border pt-6 sm:flex-row sm:items-center">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-foreground-muted">
             © {year} {siteConfig.name}. All rights reserved.
           </p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-foreground-muted">
             Built for speed. No sign-up required.
           </p>
         </div>

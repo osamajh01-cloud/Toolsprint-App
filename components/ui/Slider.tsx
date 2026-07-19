@@ -39,7 +39,7 @@ export function Slider({
       <div className="flex items-baseline justify-between gap-3">
         <label
           htmlFor={id}
-          className="text-sm font-medium text-muted-foreground"
+          className="text-sm font-medium text-foreground-muted"
         >
           {label}
         </label>
@@ -59,7 +59,7 @@ export function Slider({
         value={value}
         disabled={disabled}
         onChange={(event) => onChange(Number(event.target.value))}
-        className="h-2 w-full cursor-pointer appearance-auto accent-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed"
+        className="h-2 w-full cursor-pointer appearance-auto accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed"
       />
     </div>
   );

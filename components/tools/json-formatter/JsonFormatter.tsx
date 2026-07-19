@@ -78,14 +78,14 @@ export function JsonFormatter() {
       {result && (
         <div aria-live="polite">
           {result.ok ? (
-            <Badge variant="brand">Valid JSON</Badge>
+            <Badge variant="primary">Valid JSON</Badge>
           ) : (
             <div
               role="alert"
-              className="flex flex-col gap-1 rounded-xl border border-border bg-muted/40 p-4 text-sm"
+              className="flex flex-col gap-1 rounded-xl border border-border bg-surface-sunken p-4 text-sm"
             >
               <p className="font-semibold text-foreground">Invalid JSON</p>
-              <p className="font-mono text-muted-foreground">
+              <p className="font-mono text-foreground-muted">
                 {result.error.message}
                 {result.error.line !== undefined &&
                   ` — line ${result.error.line}, column ${result.error.column}`}

@@ -81,10 +81,10 @@ export function Base64Tool() {
       {result && !result.ok && (
         <div
           role="alert"
-          className="rounded-xl border border-border bg-muted/40 p-4 text-sm"
+          className="rounded-xl border border-border bg-surface-sunken p-4 text-sm"
         >
           <p className="font-semibold text-foreground">Can&apos;t decode this</p>
-          <p className="mt-1 text-muted-foreground">{result.error}</p>
+          <p className="mt-1 text-foreground-muted">{result.error}</p>
         </div>
       )}
 

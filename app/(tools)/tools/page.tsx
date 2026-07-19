@@ -22,12 +22,12 @@ export default function ToolsPage() {
   return (
     <>
       {/* Hero — static, crawlable */}
-      <section className="border-b border-border bg-muted/40">
+      <section className="border-b border-border bg-surface-sunken">
         <Container className="flex flex-col gap-3 py-12 sm:py-16">
           <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">
             Free online tools
           </h1>
-          <p className="max-w-2xl text-lg text-muted-foreground">
+          <p className="max-w-2xl text-lg text-foreground-muted">
             {tools.length} fast, browser-based utilities for text, code, SEO,
             social media, images, and productivity. Everything runs locally —
             no uploads, no accounts, no waiting.

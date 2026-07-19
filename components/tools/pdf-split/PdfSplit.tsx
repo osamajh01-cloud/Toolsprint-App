@@ -303,13 +303,13 @@ export function PdfSplit() {
           if (file) void loadFile(file);
         }}
         className={`flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed px-6 py-10 text-center transition-colors ${
-          dragActive ? "border-brand bg-brand/5" : "border-border bg-muted/30"
+          dragActive ? "border-primary bg-primary-subtle" : "border-border bg-surface-sunken"
         }`}
       >
         <p className="text-lg font-semibold">
           {loaded ? "Drop a different PDF to replace it" : "Drop a PDF here"}
         </p>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-foreground-muted">
           …or paste from the clipboard where supported. Up to {MAX_FILE_MB} MB.
           The file never leaves your device.
         </p>
@@ -332,7 +332,7 @@ export function PdfSplit() {
 
       {/* Empty state */}
       {phase === "empty" && !loadError && (
-        <div className="flex flex-col items-center gap-5 rounded-xl border border-border bg-muted/20 px-6 py-10 text-center motion-safe:animate-fade-in">
+        <div className="flex flex-col items-center gap-5 rounded-xl border border-border bg-surface-sunken px-6 py-10 text-center motion-safe:animate-fade-in">
           {/* One document fanning out into parts */}
           <svg
             aria-hidden="true"
@@ -345,9 +345,9 @@ export function PdfSplit() {
           >
             <path
               d="M14 16a4 4 0 0 1 4-4h30l12 12v44a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4z"
-              className="stroke-brand fill-brand/10"
+              className="stroke-primary fill-primary-subtle"
             />
-            <path d="M48 12v12h12M22 40h26M22 48h26M22 56h18" className="stroke-brand" />
+            <path d="M48 12v12h12M22 40h26M22 48h26M22 56h18" className="stroke-primary" />
             <path d="M72 48h14m0 0-5-5m5 5-5 5" className="stroke-foreground" />
             <path
               d="M100 12a3 3 0 0 1 3-3h20l8 8v20a3 3 0 0 1-3 3h-25a3 3 0 0 1-3-3z"
@@ -360,17 +360,17 @@ export function PdfSplit() {
             <path d="M106 22h16M106 28h12M106 66h16M106 72h12" className="stroke-border" />
           </svg>
 
-          <ul className="flex flex-col gap-1.5 text-sm text-muted-foreground sm:flex-row sm:gap-6">
+          <ul className="flex flex-col gap-1.5 text-sm text-foreground-muted sm:flex-row sm:gap-6">
             <li className="flex items-center justify-center gap-1.5">
-              <span aria-hidden="true" className="text-brand">•</span> Nothing
+              <span aria-hidden="true" className="text-primary">•</span> Nothing
               leaves your device
             </li>
             <li className="flex items-center justify-center gap-1.5">
-              <span aria-hidden="true" className="text-brand">•</span> No
+              <span aria-hidden="true" className="text-primary">•</span> No
               uploads, no accounts
             </li>
             <li className="flex items-center justify-center gap-1.5">
-              <span aria-hidden="true" className="text-brand">•</span> Visual
+              <span aria-hidden="true" className="text-primary">•</span> Visual
               page previews
             </li>
           </ul>
@@ -378,14 +378,14 @@ export function PdfSplit() {
       )}
 
       {loadError && (
-        <p role="alert" className="text-sm text-muted-foreground">
+        <p role="alert" className="text-sm text-foreground-muted">
           <span className="font-semibold text-foreground">Can&apos;t use that file:</span>{" "}
           {loadError}
         </p>
       )}
 
       {phase === "loading" && (
-        <p role="status" className="text-sm text-muted-foreground">
+        <p role="status" className="text-sm text-foreground-muted">
           Reading the document…
         </p>
       )}
@@ -394,7 +394,7 @@ export function PdfSplit() {
       {loaded && (phase === "ready" || phase === "splitting" || phase === "done") && (
         <>
           {/* File info */}
-          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-muted/30 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-surface-sunken p-4">
             <div className="min-w-0">
               <p className="truncate font-medium" title={loaded.name}>
                 {loaded.name}
@@ -472,7 +472,7 @@ export function PdfSplit() {
 
             {mode === "custom" && (
               <div className="flex flex-wrap items-center gap-3">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-foreground-muted">
                   Click or drag across pages below to select them.
                 </p>
                 <Button
@@ -500,7 +500,7 @@ export function PdfSplit() {
             )}
 
             {plan.error && (
-              <p role="alert" className="text-sm text-muted-foreground">
+              <p role="alert" className="text-sm text-foreground-muted">
                 <span className="font-semibold text-foreground">
                   Check your input:
                 </span>{" "}
@@ -509,7 +509,7 @@ export function PdfSplit() {
             )}
 
             {/* Live plan summary */}
-            <p aria-live="polite" className="text-sm text-muted-foreground">
+            <p aria-live="polite" className="text-sm text-foreground-muted">
               {plan.groups.length > 0 ? (
                 <>
                   Will create{" "}
@@ -530,7 +530,7 @@ export function PdfSplit() {
           {/* Preview grid + zoom */}
           <section aria-label="Page previews" className="flex flex-col gap-3">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <p className="text-sm font-medium text-muted-foreground">
+              <p className="text-sm font-medium text-foreground-muted">
                 {mode === "custom" ? "Select pages" : "Preview"}
                 {renderedCount < Math.min(loaded.pageCount, 300) && (
                   <span role="status" className="ml-2 text-xs">
@@ -583,10 +583,10 @@ export function PdfSplit() {
                   aria-valuemin={0}
                   aria-valuemax={progress.total}
                   aria-valuenow={progress.current}
-                  className="h-1.5 w-full overflow-hidden rounded-full bg-muted"
+                  className="h-1.5 w-full overflow-hidden rounded-full bg-surface-sunken"
                 >
                   <div
-                    className="h-full rounded-full bg-brand transition-[width] duration-200"
+                    className="h-full rounded-full bg-primary transition-[width] duration-200"
                     style={{
                       width: `${progress.total ? (progress.current / progress.total) * 100 : 0}%`,
                     }}
@@ -600,10 +600,10 @@ export function PdfSplit() {
           {phase === "done" && outputs.length > 0 && (
             <section
               aria-label="Split results"
-              className="flex flex-col gap-5 rounded-xl border border-border bg-muted/20 p-6 motion-safe:animate-fade-in"
+              className="flex flex-col gap-5 rounded-xl border border-border bg-surface-sunken p-6 motion-safe:animate-fade-in"
             >
               <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="brand">✓ Split complete</Badge>
+                <Badge variant="primary">✓ Split complete</Badge>
               </div>
 
               <dl className="grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -626,7 +626,7 @@ export function PdfSplit() {
                       <p className="truncate font-mono text-sm" title={output.name}>
                         {output.name}
                       </p>
-                      <p className="mt-0.5 text-xs text-muted-foreground">
+                      <p className="mt-0.5 text-xs text-foreground-muted">
                         {output.pageCount}{" "}
                         {output.pageCount === 1 ? "page" : "pages"} ·{" "}
                         {formatBytes(output.blob.size)}

@@ -54,7 +54,7 @@ export function ToolShell({ tool, children }: ToolShellProps) {
       {/* Tool header — entirely registry-driven */}
       <header className="flex flex-col gap-4">
         <div className="flex items-center gap-4">
-          <span className="inline-flex size-14 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
+          <span className="inline-flex size-14 shrink-0 items-center justify-center rounded-xl bg-primary-subtle text-primary">
             <ToolIcon name={tool.icon} className="size-7" />
           </span>
           <div className="flex flex-col gap-1.5">
@@ -63,12 +63,12 @@ export function ToolShell({ tool, children }: ToolShellProps) {
             </h1>
             <div className="flex flex-wrap gap-1.5">
               {category && <Badge variant="outline">{category.title}</Badge>}
-              <Badge variant="brand">{tool.premium ? "Pro" : "Free"}</Badge>
+              <Badge variant="primary">{tool.premium ? "Pro" : "Free"}</Badge>
             </div>
           </div>
         </div>
 
-        <p className="max-w-2xl text-lg text-muted-foreground">
+        <p className="max-w-2xl text-lg text-foreground-muted">
           {tool.shortDescription}
         </p>
 
@@ -87,13 +87,13 @@ export function ToolShell({ tool, children }: ToolShellProps) {
       {children ?? (
         <section
           aria-label="Availability"
-          className="flex flex-col items-center gap-4 rounded-xl border border-dashed border-border bg-muted/40 px-6 py-14 text-center"
+          className="flex flex-col items-center gap-4 rounded-xl border border-dashed border-border bg-surface-sunken px-6 py-14 text-center"
         >
-          <Badge variant="brand">Launching soon</Badge>
+          <Badge variant="primary">Launching soon</Badge>
           <h2 className="text-xl font-semibold">
             {tool.title} is in the final stretch
           </h2>
-          <p className="max-w-md text-sm text-muted-foreground">
+          <p className="max-w-md text-sm text-foreground-muted">
             This tool is being built right now and will run entirely in your
             browser — free, private, and with no sign-up. In the meantime,
             the rest of the catalog is one click away.

@@ -17,8 +17,8 @@ interface StatCardProps {
 
 export function StatCard({ label, value, hint, dense = false }: StatCardProps) {
   return (
-    <div className="flex flex-col gap-1 rounded-xl border border-border bg-background p-4">
-      <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+    <div className="flex flex-col gap-1 rounded-xl border border-border bg-surface p-4">
+      <dt className="text-xs font-medium uppercase tracking-wide text-foreground-muted">
         {label}
       </dt>
       <dd
@@ -28,7 +28,7 @@ export function StatCard({ label, value, hint, dense = false }: StatCardProps) {
       >
         {value}
       </dd>
-      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+      {hint && <p className="text-xs text-foreground-muted">{hint}</p>}
     </div>
   );
 }

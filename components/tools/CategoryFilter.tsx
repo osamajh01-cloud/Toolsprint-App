@@ -55,16 +55,16 @@ export function CategoryFilter({
             role="radio"
             aria-checked={active}
             onClick={() => onChange(option.slug)}
-            className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand ${
+            className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
               active
-                ? "border-brand bg-brand text-brand-foreground"
-                : "border-border text-muted-foreground hover:border-brand/40 hover:text-foreground"
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border text-foreground-muted hover:border-primary/40 hover:text-foreground"
             }`}
           >
             {option.title}
             <span
               className={`text-xs tabular-nums ${
-                active ? "text-brand-foreground/80" : "text-muted-foreground/70"
+                active ? "text-primary-foreground/80" : "text-foreground-subtle"
               }`}
             >
               {option.count}

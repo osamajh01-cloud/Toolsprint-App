@@ -68,7 +68,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   return (
     <>
       {/* Category hero — static, crawlable, registry-driven */}
-      <section className="border-b border-border bg-muted/40">
+      <section className="border-b border-border bg-surface-sunken">
         <Container className="flex flex-col gap-5 py-12 sm:py-16">
           <Breadcrumbs
             items={[
@@ -78,14 +78,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             ]}
           />
           <div className="flex items-center gap-4">
-            <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
+            <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary-subtle text-primary">
               <ToolIcon name={category.icon} className="size-6" />
             </span>
             <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">
               {category.title} tools
             </h1>
           </div>
-          <p className="max-w-2xl text-lg text-muted-foreground">
+          <p className="max-w-2xl text-lg text-foreground-muted">
             {category.description}
           </p>
         </Container>
@@ -98,7 +98,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <h2 id="category-tools-heading" className="text-lg font-semibold">
               All {category.title.toLowerCase()} tools
             </h2>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-foreground-muted">
               {categoryTools.length}{" "}
               {categoryTools.length === 1 ? "tool" : "tools"}
             </p>
@@ -123,7 +123,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <Link
                 key={other.slug}
                 href={`/tools/category/${other.slug}`}
-                className="inline-flex items-center gap-2 rounded-full border border-border px-3.5 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:border-brand/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                className="inline-flex items-center gap-2 rounded-full border border-border px-3.5 py-1.5 text-sm font-medium text-foreground-muted transition-colors hover:border-primary/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <ToolIcon name={other.icon} className="size-4" />
                 {other.title}

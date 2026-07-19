@@ -56,10 +56,10 @@ export function LanguageSwitcher() {
             aria-checked={active === lang.code}
             aria-label={lang.name}
             onClick={() => select(lang.code)}
-            className={`rounded-full px-2.5 py-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand ${
+            className={`rounded-full px-2.5 py-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
               active === lang.code
-                ? "bg-muted text-foreground"
-                : "text-muted-foreground hover:text-foreground"
+                ? "bg-surface-sunken text-foreground"
+                : "text-foreground-muted hover:text-foreground"
             }`}
           >
             {lang.label}
@@ -70,7 +70,7 @@ export function LanguageSwitcher() {
       {showNote && (
         <p
           role="status"
-          className="absolute right-0 top-full z-50 mt-2 whitespace-nowrap rounded-md border border-border bg-background px-3 py-1.5 text-xs text-muted-foreground shadow-sm"
+          className="absolute right-0 top-full z-50 mt-2 whitespace-nowrap rounded-md border border-border bg-surface px-3 py-1.5 text-xs text-foreground-muted shadow-sm"
         >
           العربية قريباً — Arabic is coming soon
         </p>

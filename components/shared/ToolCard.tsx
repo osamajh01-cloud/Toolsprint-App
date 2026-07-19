@@ -36,15 +36,15 @@ export function ToolCard({ tool }: ToolCardProps) {
   return (
     <Link
       href={`/tools/${tool.slug}`}
-      className="group flex h-full flex-col gap-3 rounded-xl border border-border bg-background p-5 transition-colors hover:border-brand/50 hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+      className="group flex h-full flex-col gap-3 rounded-xl border border-border bg-surface p-5 transition-colors hover:border-primary/40 hover:bg-surface-sunken focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
     >
       <div className="flex items-start justify-between gap-3">
-        <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">
+        <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary-subtle text-primary">
           <ToolIcon name={tool.icon} />
         </span>
         <div className="flex flex-wrap justify-end gap-1.5">
           {category && <Badge variant="outline">{category.title}</Badge>}
-          <Badge variant="brand">{tool.premium ? "Pro" : "Free"}</Badge>
+          <Badge variant="primary">{tool.premium ? "Pro" : "Free"}</Badge>
         </div>
       </div>
 
@@ -58,12 +58,12 @@ export function ToolCard({ tool }: ToolCardProps) {
 
       <div className="flex-1">
         <h3 className="font-semibold leading-snug">{tool.title}</h3>
-        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+        <p className="mt-1 text-sm leading-relaxed text-foreground-muted">
           {tool.shortDescription}
         </p>
       </div>
 
-      <span className="inline-flex items-center gap-1 text-sm font-medium text-brand">
+      <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">
         Open tool
         <svg
           aria-hidden="true"
