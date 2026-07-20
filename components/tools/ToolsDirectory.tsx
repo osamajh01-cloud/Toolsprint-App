@@ -7,6 +7,10 @@ import { Button } from "@/components/ui/Button";
 import { CategoryFilter } from "@/components/tools/CategoryFilter";
 import { useToolSearch } from "@/hooks/use-tool-search";
 import { getCategoryCounts, getFeaturedTools, tools } from "@/registry/tools";
+import { localizeTools } from "@/i18n/content";
+import { t } from "@/i18n/dictionary";
+import { type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries/en";
 
 /**
  * components/tools/ToolsDirectory.tsx
@@ -25,12 +29,18 @@ import { getCategoryCounts, getFeaturedTools, tools } from "@/registry/tools";
  *   users hear filtering feedback without focus jumps.
  */
 
-const featuredTools = getFeaturedTools();
 const categoryCounts = getCategoryCounts();
 
-export function ToolsDirectory() {
+export function ToolsDirectory({
+  locale,
+  dictionary,
+}: {
+  locale: Locale;
+  dictionary: Dictionary;
+}) {
   const { query, setQuery, category, setCategory, results, isFiltering, reset } =
-    useToolSearch();
+    useToolSearch(locale);
+  const featuredTools = localizeTools(getFeaturedTools(), locale);
 
   return (
     <div className="flex flex-col gap-8">
@@ -39,14 +49,16 @@ export function ToolsDirectory() {
         <SearchBar
           value={query}
           onChange={setQuery}
-          placeholder={`Search ${tools.length} tools — try “json”, “password”, or “hashtag”…`}
-          label="Search tools"
+          placeholder={t(dictionary.tools.searchPlaceholder, { count: tools.length })}
+          label={dictionary.tools.searchLabel}
           className="max-w-xl"
         />
         <CategoryFilter
           value={category}
           onChange={setCategory}
           counts={categoryCounts}
+          locale={locale}
+          dictionary={dictionary}
           totalCount={tools.length}
         />
       </div>
@@ -55,11 +67,16 @@ export function ToolsDirectory() {
       {!isFiltering && (
         <section aria-labelledby="featured-heading" className="flex flex-col gap-4">
           <h2 id="featured-heading" className="text-lg font-semibold">
-            Featured tools
+            {dictionary.tools.featured}
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {featuredTools.map((tool) => (
-              <ToolCard key={tool.id} tool={tool} />
+              <ToolCard
+                key={tool.id}
+                tool={tool}
+                locale={locale}
+                dictionary={dictionary}
+              />
             ))}
           </div>
         </section>
@@ -69,28 +86,41 @@ export function ToolsDirectory() {
       <section aria-labelledby="all-tools-heading" className="flex flex-col gap-4">
         <div className="flex items-baseline justify-between gap-4">
           <h2 id="all-tools-heading" className="text-lg font-semibold">
-            {isFiltering ? "Results" : "All tools"}
+            {isFiltering ? dictionary.tools.results : dictionary.tools.allTools}
           </h2>
           <p aria-live="polite" className="text-sm text-foreground-muted">
-            {results.length} {results.length === 1 ? "tool" : "tools"}
+            {t(
+              results.length === 1
+                ? dictionary.tools.toolCount
+                : dictionary.tools.toolCountPlural,
+              { count: results.length },
+            )}
           </p>
         </div>
 
         {results.length > 0 ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {results.map((tool) => (
-              <ToolCard key={tool.id} tool={tool} />
+              <ToolCard
+                key={tool.id}
+                tool={tool}
+                locale={locale}
+                dictionary={dictionary}
+              />
             ))}
           </div>
         ) : (
           <EmptyState
-            title="No tools match your search"
-            description={`Nothing matches “${query.trim()}”${
-              category !== "all" ? " in this category" : ""
-            }. Try a different keyword, or browse the full catalog.`}
+            title={dictionary.search.emptyTitle}
+            description={t(
+              category !== "all"
+                ? dictionary.search.emptyBodyCategory
+                : dictionary.search.emptyBody,
+              { query: query.trim() },
+            )}
             action={
               <Button variant="secondary" size="sm" onClick={reset}>
-                Clear search and filters
+                {dictionary.search.clearFilters}
               </Button>
             }
           />

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { THEME_STORAGE_KEY } from "@/components/layout/ThemeScript";
+import type { Dictionary } from "@/i18n/dictionaries/en";
 
 /**
  * components/layout/ThemeToggle.tsx
@@ -56,7 +57,7 @@ function MoonIcon() {
   );
 }
 
-export function ThemeToggle() {
+export function ThemeToggle({ dictionary }: { dictionary: Dictionary }) {
   const [mounted, setMounted] = useState(false);
   const [isDark, setIsDark] = useState(false);
 
@@ -86,9 +87,9 @@ export function ThemeToggle() {
       aria-label={
         mounted
           ? isDark
-            ? "Switch to light theme"
-            : "Switch to dark theme"
-          : "Toggle theme"
+            ? dictionary.nav.lightTheme
+            : dictionary.nav.darkTheme
+          : dictionary.nav.toggleTheme
       }
       className="inline-flex size-9 items-center justify-center rounded-full text-foreground-muted transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
     >

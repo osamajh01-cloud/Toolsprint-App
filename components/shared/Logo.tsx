@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
+import { localePath } from "@/i18n/paths";
+import { defaultLocale, type Locale } from "@/i18n/config";
 
 /**
  * components/shared/Logo.tsx
@@ -12,13 +14,15 @@ import { siteConfig } from "@/config/site";
  */
 
 interface LogoProps {
+  /** Active locale, so the home link stays inside the language. */
+  locale?: Locale;
   /** Optional additional classNames, e.g. to resize the logo in different contexts. */
   className?: string;
   /** Whether the logo should link to the homepage. Defaults to true. */
   asLink?: boolean;
 }
 
-export function Logo({ className = "", asLink = true }: LogoProps) {
+export function Logo({ className = "", asLink = true, locale = defaultLocale }: LogoProps) {
   const content = (
     <span className={`text-xl font-bold tracking-tight ${className}`}>
       {siteConfig.shortName}
@@ -28,7 +32,7 @@ export function Logo({ className = "", asLink = true }: LogoProps) {
   if (!asLink) return content;
 
   return (
-    <Link href="/" aria-label={`${siteConfig.name} home`}>
+    <Link href={localePath(locale, "/")} aria-label={`${siteConfig.name} home`}>
       {content}
     </Link>
   );

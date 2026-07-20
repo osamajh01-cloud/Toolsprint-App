@@ -25,11 +25,17 @@ export interface BreadcrumbItem {
 interface BreadcrumbsProps {
   items: BreadcrumbItem[];
   className?: string;
+  /** Accessible name for the nav landmark, translated by the caller. */
+  label?: string;
 }
 
-export function Breadcrumbs({ items, className = "" }: BreadcrumbsProps) {
+export function Breadcrumbs({
+  items,
+  className = "",
+  label = "Breadcrumb",
+}: BreadcrumbsProps) {
   return (
-    <nav aria-label="Breadcrumb" className={className}>
+    <nav aria-label={label} className={className}>
       <ol className="flex flex-wrap items-center gap-1.5 text-sm text-foreground-muted">
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
@@ -45,7 +51,7 @@ export function Breadcrumbs({ items, className = "" }: BreadcrumbsProps) {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="size-3.5 opacity-60"
+                    className="size-3.5 opacity-60 rtl:-scale-x-100"
                   >
                     <path d="m9 18 6-6-6-6" />
                   </svg>

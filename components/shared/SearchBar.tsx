@@ -38,7 +38,7 @@ export function SearchBar({
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
-        className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-foreground-muted"
+        className="pointer-events-none absolute start-3.5 top-1/2 size-4 -translate-y-1/2 text-foreground-subtle"
       >
         <circle cx="11" cy="11" r="7" />
         <path d="m21 21-4.3-4.3" />
@@ -52,7 +52,7 @@ export function SearchBar({
         aria-label={label}
         autoComplete="off"
         spellCheck={false}
-        className="h-11 w-full appearance-none rounded-full border border-border bg-surface pl-10 pr-10 text-sm text-foreground placeholder:text-foreground-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25 [&::-webkit-search-cancel-button]:hidden"
+        className="h-11 w-full appearance-none rounded-full border border-border bg-surface ps-10 pe-10 text-sm text-foreground placeholder:text-foreground-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25 [&::-webkit-search-cancel-button]:hidden"
       />
 
       {value && (
@@ -60,7 +60,7 @@ export function SearchBar({
           type="button"
           onClick={() => onChange("")}
           aria-label="Clear search"
-          className="absolute right-2.5 top-1/2 inline-flex size-6 -translate-y-1/2 items-center justify-center rounded-full text-foreground-muted transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          className="absolute end-2.5 top-1/2 inline-flex size-6 -translate-y-1/2 items-center justify-center rounded-full text-foreground-muted transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
           <svg
             aria-hidden="true"

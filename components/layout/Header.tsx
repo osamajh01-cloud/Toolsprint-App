@@ -8,29 +8,31 @@ import { MobileNav } from "@/components/layout/MobileNav";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { useScrolled } from "@/components/layout/useScrolled";
-import { mainNav } from "@/config/navigation";
+import { getMainNav } from "@/config/navigation";
+import { localePath } from "@/i18n/paths";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries/en";
 
 /**
  * components/layout/Header.tsx
  *
- * Sticky site header: logo, primary nav, language switcher, theme toggle,
- * and the primary CTA.
+ * Sticky, scroll-aware site header: flat over the hero, gaining a
+ * hairline border, blur, and shadow once content passes beneath it.
  *
- * Milestone 12: the header is now scroll-aware — flat and borderless over
- * the hero, then gaining a hairline border, translucent blur, and a soft
- * shadow once content scrolls beneath it. That transition is the only
- * chrome animation on the page, and it's suppressed under motion-reduce
- * by the token-level transition rules.
- *
- * This became a Client Component only for the scroll state; all the
- * interactive parts (NavLink, MobileNav, ThemeToggle, LanguageSwitcher)
- * were already client leaves, so no new JavaScript ships for it.
- *
- * A skip link is the first focusable element; each group layout marks its
- * content region with id="main-content".
+ * Fully localized: labels come from the dictionary, links are
+ * locale-prefixed, and the layout mirrors automatically under RTL because
+ * it uses flex order plus logical properties rather than left/right
+ * offsets — no direction-specific CSS is needed here.
  */
-export function Header() {
+export function Header({
+  locale,
+  dictionary,
+}: {
+  locale: Locale;
+  dictionary: Dictionary;
+}) {
   const scrolled = useScrolled();
+  const mainNav = getMainNav(dictionary);
 
   return (
     <header
@@ -42,31 +44,39 @@ export function Header() {
     >
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-3 focus:py-2 focus:text-sm focus:text-primary-foreground"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-3 focus:py-2 focus:text-sm focus:text-primary-foreground focus:start-4"
       >
-        Skip to content
+        {dictionary.nav.skipToContent}
       </a>
 
       <Container className="relative flex h-16 items-center justify-between gap-4">
         <div className="flex items-center gap-8">
-          <Logo />
+          <Logo locale={locale} />
 
-          <nav aria-label="Main" className="hidden items-center gap-1 md:flex">
+          <nav
+            aria-label={dictionary.nav.mainNav}
+            className="hidden items-center gap-1 md:flex"
+          >
             {mainNav.map((item) => (
-              <NavLink key={item.href} item={item} />
+              <NavLink
+                key={item.href}
+                item={item}
+                locale={locale}
+                soonLabel={dictionary.nav.soon}
+              />
             ))}
           </nav>
         </div>
 
         <div className="hidden items-center gap-1.5 md:flex">
-          <LanguageSwitcher />
-          <ThemeToggle />
-          <Button href="/tools" size="sm" className="ml-1.5">
-            Explore tools
+          <LanguageSwitcher locale={locale} label={dictionary.nav.language} />
+          <ThemeToggle dictionary={dictionary} />
+          <Button href={localePath(locale, "/tools")} size="sm" className="ms-1.5">
+            {dictionary.nav.exploreTools}
           </Button>
         </div>
 
-        <MobileNav />
+        <MobileNav locale={locale} dictionary={dictionary} />
       </Container>
     </header>
   );

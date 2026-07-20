@@ -2,6 +2,10 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { tools } from "@/registry/tools";
+import { t } from "@/i18n/dictionary";
+import { localePath } from "@/i18n/paths";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries/en";
 
 /**
  * components/marketing/Hero.tsx
@@ -16,7 +20,13 @@ import { tools } from "@/registry/tools";
  * Server Component. The tool count comes from the registry, so the copy
  * can never drift from the catalog.
  */
-export function Hero() {
+export function Hero({
+  locale,
+  dictionary,
+}: {
+  locale: Locale;
+  dictionary: Dictionary;
+}) {
   return (
     <section
       aria-labelledby="hero-heading"
@@ -29,27 +39,30 @@ export function Hero() {
 
       <Container className="relative flex flex-col items-center gap-6 py-20 text-center sm:py-28">
         <Badge variant="primary" className="motion-safe:animate-fade-in">
-          {tools.length} tools · nothing leaves your device
+          {t(dictionary.home.heroBadge, { count: tools.length })}
         </Badge>
 
         <h1
           id="hero-heading"
           className="max-w-3xl text-balance text-4xl font-semibold leading-[1.08] tracking-tight sm:text-6xl motion-safe:animate-rise-in"
         >
-          Save hours with powerful online tools.
+          {dictionary.home.heroTitle}
         </h1>
 
         <p className="max-w-xl text-balance text-lg leading-relaxed text-foreground-muted motion-safe:animate-rise-in">
-          Compress a PDF, shrink a photo, clean up text — every tool runs
-          entirely in your browser. No uploads, no accounts, no waiting.
+          {dictionary.home.heroSubtitle}
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-3 motion-safe:animate-rise-in">
-          <Button href="/tools" size="lg">
-            Explore tools
+          <Button href={localePath(locale, "/tools")} size="lg">
+            {dictionary.home.heroCtaPrimary}
           </Button>
-          <Button href="/tools/pdf-merge" variant="outline" size="lg">
-            Merge a PDF
+          <Button
+            href={localePath(locale, "/tools/pdf-merge")}
+            variant="outline"
+            size="lg"
+          >
+            {dictionary.home.heroCtaSecondary}
           </Button>
         </div>
       </Container>

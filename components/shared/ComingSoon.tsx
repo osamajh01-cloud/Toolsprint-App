@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { localePath } from "@/i18n/paths";
+import { defaultLocale, type Locale } from "@/i18n/config";
 
 /**
  * components/shared/ComingSoon.tsx
@@ -28,6 +30,7 @@ interface ComingSoonProps {
   /** CTA target; defaults to the homepage. */
   ctaHref?: string;
   ctaText?: string;
+  locale?: Locale;
 }
 
 export function ComingSoon({
@@ -37,15 +40,14 @@ export function ComingSoon({
   children,
   ctaHref = "/",
   ctaText = "Back to home",
+  locale = defaultLocale,
 }: ComingSoonProps) {
   return (
     <Container
       as="section"
       className="flex min-h-[60vh] flex-col items-center justify-center gap-6 py-24 text-center"
     >
-      <Badge variant="primary">
-        {label} · Coming soon
-      </Badge>
+      <Badge variant="primary">{label}</Badge>
 
       <h1 className="max-w-2xl text-3xl font-bold tracking-tight sm:text-5xl">
         {title}
@@ -57,7 +59,7 @@ export function ComingSoon({
 
       {children}
 
-      <Button href={ctaHref} variant="secondary">
+      <Button href={localePath(locale, ctaHref)} variant="secondary">
         {ctaText}
       </Button>
     </Container>

@@ -1,31 +1,35 @@
 import type { ReactNode } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries/en";
 
 /**
  * components/layout/SiteShell.tsx
  *
- * Standard public page chrome: Header on top, Footer at the bottom, and a
- * main content region that grows to push the footer to the viewport bottom
- * on short pages (flex column + flex-1).
- *
- * The (marketing), (tools), and (blog) route groups all currently share
- * identical chrome, so each group's layout.tsx delegates here instead of
- * repeating the same JSX three times. When a section later needs different
- * chrome (e.g. the dashboard's sidebar, or a tools sidebar), that group
- * swaps this component out in ITS OWN layout without touching the others —
- * which is exactly why the architecture uses route groups.
+ * Standard public page chrome: Header, a growing main region, Footer.
+ * Takes the resolved locale and dictionary from the route-group layout
+ * and passes them to the header and footer, so no chrome component has to
+ * load a dictionary itself.
  *
  * `id="main-content"` is the target of the Header's skip link.
  */
-export function SiteShell({ children }: { children: ReactNode }) {
+export function SiteShell({
+  children,
+  locale,
+  dictionary,
+}: {
+  children: ReactNode;
+  locale: Locale;
+  dictionary: Dictionary;
+}) {
   return (
     <div className="flex min-h-screen flex-col">
-      <Header />
+      <Header locale={locale} dictionary={dictionary} />
       <main id="main-content" className="flex-1">
         {children}
       </main>
-      <Footer />
+      <Footer locale={locale} dictionary={dictionary} />
     </div>
   );
 }

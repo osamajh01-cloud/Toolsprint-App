@@ -1,6 +1,9 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ToolCard } from "@/components/shared/ToolCard";
+import { localePath } from "@/i18n/paths";
+import { defaultLocale, type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries/en";
 import type { Tool } from "@/types/tool";
 
 /**
@@ -23,6 +26,8 @@ interface ToolSectionProps {
   emoji?: string;
   description?: string;
   tools: Tool[];
+  locale?: Locale;
+  dictionary: Dictionary;
   /** Optional trailing link, e.g. { href: "/tools", label: "See all" }. */
   action?: { href: string; label: string };
   /** Extra content between the header and the grid. */
@@ -35,6 +40,8 @@ export function ToolSection({
   emoji,
   description,
   tools,
+  locale = defaultLocale,
+  dictionary,
   action,
   children,
 }: ToolSectionProps) {
@@ -60,7 +67,7 @@ export function ToolSection({
         </div>
         {action && (
           <Link
-            href={action.href}
+            href={localePath(locale, action.href)}
             className="rounded-sm text-sm font-medium text-primary transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             {action.label}
@@ -73,7 +80,12 @@ export function ToolSection({
       {tools.length > 0 && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {tools.map((tool) => (
-            <ToolCard key={tool.id} tool={tool} />
+            <ToolCard
+              key={tool.id}
+              tool={tool}
+              locale={locale}
+              dictionary={dictionary}
+            />
           ))}
         </div>
       )}

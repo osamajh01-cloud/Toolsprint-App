@@ -2,33 +2,41 @@ import Link from "next/link";
 import { Logo } from "@/components/shared/Logo";
 import { Container } from "@/components/ui/Container";
 import { Badge } from "@/components/ui/Badge";
-import { footerNav, type NavItem } from "@/config/navigation";
-import { siteConfig } from "@/config/site";
+import { getFooterNav, type NavItem } from "@/config/navigation";
+import { t } from "@/i18n/dictionary";
+import { localePath } from "@/i18n/paths";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries/en";
 
 /**
  * components/layout/Footer.tsx
  *
- * Site-wide footer: brand block, four link columns (Product, Resources,
- * Legal, Social) rendered from `config/navigation.ts`, and the copyright
- * line. Server Component — purely static markup.
+ * Site footer: brand block, four link columns, copyright. Columns and
+ * labels come from the dictionary-driven navigation config, and internal
+ * links are locale-prefixed. Server Component — static markup.
  *
- * Link rendering rules (from the NavItem contract):
- * - `disabled` items (pages shipping in later milestones) render as inert
- *   text with a "Soon" badge — the footer never contains a dead link.
- * - `external` items open in a new tab with rel="noopener noreferrer".
- * - `comingSoon` items that DO have a page (e.g. /pricing) render as
- *   normal links with a badge.
+ * Link rules (from the NavItem contract): `disabled` items render as
+ * inert text with a "Soon" badge (never a dead link), `external` items
+ * open in a new tab with rel security attributes.
  */
 
-function FooterLink({ item }: { item: NavItem }) {
+function FooterLink({
+  item,
+  locale,
+  soonLabel,
+}: {
+  item: NavItem;
+  locale: Locale;
+  soonLabel: string;
+}) {
   const linkStyles =
-    "text-sm text-foreground-muted transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm";
+    "rounded-sm text-sm text-foreground-muted transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
   if (item.disabled) {
     return (
       <span className="inline-flex items-center gap-1.5 text-sm text-foreground-subtle">
         {item.title}
-        <Badge>Soon</Badge>
+        <Badge>{soonLabel}</Badge>
       </span>
     );
   }
@@ -47,36 +55,48 @@ function FooterLink({ item }: { item: NavItem }) {
   }
 
   return (
-    <Link href={item.href} className={`inline-flex items-center gap-1.5 ${linkStyles}`}>
+    <Link
+      href={localePath(locale, item.href)}
+      className={`inline-flex items-center gap-1.5 ${linkStyles}`}
+    >
       {item.title}
-      {item.comingSoon && <Badge>Soon</Badge>}
+      {item.comingSoon && <Badge>{soonLabel}</Badge>}
     </Link>
   );
 }
 
-export function Footer() {
+export function Footer({
+  locale,
+  dictionary,
+}: {
+  locale: Locale;
+  dictionary: Dictionary;
+}) {
   const year = new Date().getFullYear();
+  const columns = getFooterNav(dictionary);
 
   return (
     <footer className="border-t border-border">
-      <Container className="py-12">
+      <Container className="py-14">
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-6">
-          {/* Brand block spans two columns on large screens. */}
           <div className="col-span-2 flex flex-col gap-3 sm:col-span-3 lg:col-span-2">
-            <Logo />
-            <p className="max-w-xs text-sm text-foreground-muted">
-              Fast, free, browser-based tools for developers, writers, and
-              everyday tasks. No sign-up required.
+            <Logo locale={locale} />
+            <p className="max-w-xs text-sm leading-relaxed text-foreground-muted">
+              {dictionary.footer.tagline}
             </p>
           </div>
 
-          {footerNav.map((column) => (
+          {columns.map((column) => (
             <nav key={column.title} aria-label={column.title}>
               <h2 className="mb-3 text-sm font-semibold">{column.title}</h2>
               <ul className="flex flex-col gap-2.5">
                 {column.items.map((item) => (
                   <li key={item.title}>
-                    <FooterLink item={item} />
+                    <FooterLink
+                      item={item}
+                      locale={locale}
+                      soonLabel={dictionary.nav.soon}
+                    />
                   </li>
                 ))}
               </ul>
@@ -86,10 +106,10 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-start justify-between gap-2 border-t border-border pt-6 sm:flex-row sm:items-center">
           <p className="text-sm text-foreground-muted">
-            © {year} {siteConfig.name}. All rights reserved.
+            {t(dictionary.footer.rights, { year })}
           </p>
-          <p className="text-sm text-foreground-muted">
-            Built for speed. No sign-up required.
+          <p className="text-sm text-foreground-subtle">
+            {dictionary.footer.builtFor}
           </p>
         </div>
       </Container>

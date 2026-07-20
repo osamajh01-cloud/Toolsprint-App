@@ -6,47 +6,46 @@ import { NavLink } from "@/components/layout/NavLink";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { Button } from "@/components/ui/Button";
-import { mainNav } from "@/config/navigation";
+import { getMainNav } from "@/config/navigation";
+import { localePath } from "@/i18n/paths";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries/en";
 
 /**
  * components/layout/MobileNav.tsx
  *
- * Hamburger menu for viewports below `md`. Renders the same `mainNav`
- * config as the desktop nav, plus the theme toggle, language switcher,
- * and CTA — so nothing is lost on small screens.
+ * Hamburger menu below `md`, carrying the same nav plus the theme toggle,
+ * language switcher, and CTA — nothing is lost on small screens.
  *
- * Accessibility & UX details:
- * - The trigger exposes `aria-expanded` + `aria-controls`.
- * - Escape closes the menu.
- * - The menu closes automatically on route change (pathname effect), so
- *   users never navigate "behind" an open overlay.
- * - Body scroll is locked while open to prevent background scrolling.
- * - The hamburger/close icons are aria-hidden; state is announced through
- *   the button label.
+ * Accessibility: aria-expanded/aria-controls on the trigger, Escape to
+ * close, auto-close on route change (so switching language or navigating
+ * never leaves an overlay open), and body scroll locked while open.
  */
 
 const MENU_ID = "mobile-nav-menu";
 
-export function MobileNav() {
+export function MobileNav({
+  locale,
+  dictionary,
+}: {
+  locale: Locale;
+  dictionary: Dictionary;
+}) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const mainNav = getMainNav(dictionary);
 
-  // Close on route change.
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
-  // Close on Escape; lock body scroll while open.
   useEffect(() => {
     if (!open) return;
-
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") setOpen(false);
     }
-
     document.addEventListener("keydown", onKeyDown);
     document.body.style.overflow = "hidden";
-
     return () => {
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
@@ -55,13 +54,12 @@ export function MobileNav() {
 
   return (
     <div className="md:hidden">
-      <button
-        type="button"
+      <Button
+        variant="icon"
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-controls={MENU_ID}
-        aria-label={open ? "Close menu" : "Open menu"}
-        className="inline-flex size-9 items-center justify-center rounded-full text-foreground-muted transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        aria-label={open ? dictionary.nav.closeMenu : dictionary.nav.openMenu}
       >
         <svg
           aria-hidden="true"
@@ -78,18 +76,23 @@ export function MobileNav() {
             <path d="M4 7h16M4 12h16M4 17h16" />
           )}
         </svg>
-      </button>
+      </Button>
 
       {open && (
         <div
           id={MENU_ID}
           className="absolute inset-x-0 top-full border-b border-border bg-surface shadow-lg"
         >
-          <nav aria-label="Mobile" className="flex flex-col gap-1 p-4">
+          <nav
+            aria-label={dictionary.nav.mobileNav}
+            className="flex flex-col gap-1 p-4"
+          >
             {mainNav.map((item) => (
               <NavLink
                 key={item.href}
                 item={item}
+                locale={locale}
+                soonLabel={dictionary.nav.soon}
                 variant="mobile"
                 onNavigate={() => setOpen(false)}
               />
@@ -98,11 +101,15 @@ export function MobileNav() {
 
           <div className="flex items-center justify-between gap-3 border-t border-border p-4">
             <div className="flex items-center gap-2">
-              <ThemeToggle />
-              <LanguageSwitcher />
+              <ThemeToggle dictionary={dictionary} />
+              <LanguageSwitcher locale={locale} label={dictionary.nav.language} />
             </div>
-            <Button href="/tools" size="sm" onClick={() => setOpen(false)}>
-              Explore Tools
+            <Button
+              href={localePath(locale, "/tools")}
+              size="sm"
+              onClick={() => setOpen(false)}
+            >
+              {dictionary.nav.exploreTools}
             </Button>
           </div>
         </div>

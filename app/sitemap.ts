@@ -1,59 +1,74 @@
 import type { MetadataRoute } from "next";
-import { siteConfig } from "@/config/site";
 import { categories, tools } from "@/registry/tools";
+import { locales } from "@/i18n/config";
+import { localeUrl } from "@/i18n/seo";
 
 /**
  * app/sitemap.ts
  *
- * Registry-driven sitemap at /sitemap.xml — the Milestone 7 requirement
- * that every tool joins the sitemap "automatically from the registry".
- * Tool #24 and category #7 appear here with zero edits to this file.
- * Placeholder sections (pricing, blog) are listed at low priority; the
- * trust pages arrive with Milestone 13 and will be added then.
+ * Localized sitemap at /sitemap.xml. Every page appears once per language
+ * with an `alternates.languages` block, which is how Google reads
+ * hreflang from a sitemap — so the two language versions of a page are
+ * explicitly paired rather than competing as duplicates.
+ *
+ * Registry-driven: a new tool, category, or LOCALE is picked up here with
+ * zero edits to this file.
  */
+
+/** hreflang alternates for one locale-agnostic path. */
+function alternatesFor(path: string) {
+  const languages: Record<string, string> = {};
+  for (const locale of locales) {
+    languages[locale] = localeUrl(locale, path);
+  }
+  return { languages };
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  const staticPages: MetadataRoute.Sitemap = [
-    {
-      url: siteConfig.url,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${siteConfig.url}/tools`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${siteConfig.url}/pricing`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.3,
-    },
-    {
-      url: `${siteConfig.url}/blog`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.3,
-    },
+  const staticPaths: { path: string; priority: number; freq: "weekly" | "monthly" }[] = [
+    { path: "/", priority: 1, freq: "weekly" },
+    { path: "/tools", priority: 0.9, freq: "weekly" },
+    { path: "/pricing", priority: 0.3, freq: "monthly" },
+    { path: "/blog", priority: 0.3, freq: "monthly" },
   ];
 
-  const toolPages: MetadataRoute.Sitemap = tools.map((tool) => ({
-    url: `${siteConfig.url}/tools/${tool.slug}`,
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: 0.8,
-  }));
+  const entries: MetadataRoute.Sitemap = [];
 
-  const categoryPages: MetadataRoute.Sitemap = categories.map((category) => ({
-    url: `${siteConfig.url}/tools/category/${category.slug}`,
-    lastModified: now,
-    changeFrequency: "weekly",
-    priority: 0.7,
-  }));
+  for (const locale of locales) {
+    for (const { path, priority, freq } of staticPaths) {
+      entries.push({
+        url: localeUrl(locale, path),
+        lastModified: now,
+        changeFrequency: freq,
+        priority,
+        alternates: alternatesFor(path),
+      });
+    }
 
-  return [...staticPages, ...categoryPages, ...toolPages];
+    for (const category of categories) {
+      const path = `/tools/category/${category.slug}`;
+      entries.push({
+        url: localeUrl(locale, path),
+        lastModified: now,
+        changeFrequency: "weekly",
+        priority: 0.7,
+        alternates: alternatesFor(path),
+      });
+    }
+
+    for (const tool of tools) {
+      const path = `/tools/${tool.slug}`;
+      entries.push({
+        url: localeUrl(locale, path),
+        lastModified: now,
+        changeFrequency: "monthly",
+        priority: 0.8,
+        alternates: alternatesFor(path),
+      });
+    }
+  }
+
+  return entries;
 }

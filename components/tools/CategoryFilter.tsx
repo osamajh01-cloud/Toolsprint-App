@@ -1,6 +1,9 @@
 "use client";
 
 import { categories } from "@/registry/tools/categories";
+import { localizeCategories } from "@/i18n/content";
+import { defaultLocale, type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries/en";
 import type { CategoryFilterValue } from "@/hooks/use-tool-search";
 import type { CategorySlug } from "@/types/tool";
 
@@ -22,6 +25,8 @@ interface CategoryFilterProps {
   onChange: (value: CategoryFilterValue) => void;
   counts: Record<CategorySlug, number>;
   totalCount: number;
+  locale?: Locale;
+  dictionary: Dictionary;
 }
 
 export function CategoryFilter({
@@ -29,11 +34,14 @@ export function CategoryFilter({
   onChange,
   counts,
   totalCount,
+  locale = defaultLocale,
+  dictionary,
 }: CategoryFilterProps) {
+  const localized = localizeCategories(categories, locale);
   const options: { slug: CategoryFilterValue; title: string; count: number }[] =
     [
-      { slug: "all", title: "All", count: totalCount },
-      ...categories.map((category) => ({
+      { slug: "all", title: dictionary.tools.all, count: totalCount },
+      ...localized.map((category) => ({
         slug: category.slug,
         title: category.title,
         count: counts[category.slug],
@@ -43,7 +51,7 @@ export function CategoryFilter({
   return (
     <div
       role="radiogroup"
-      aria-label="Filter tools by category"
+      aria-label={dictionary.tools.filterByCategory}
       className="flex gap-2 overflow-x-auto pb-1 [-webkit-overflow-scrolling:touch]"
     >
       {options.map((option) => {

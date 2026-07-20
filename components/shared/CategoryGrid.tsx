@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { ToolIcon } from "@/components/shared/ToolIcon";
 import { categories, getCategoryCounts } from "@/registry/tools";
+import { localizeCategories } from "@/i18n/content";
+import { localePath } from "@/i18n/paths";
+import { defaultLocale, type Locale } from "@/i18n/config";
 
 /**
  * components/shared/CategoryGrid.tsx
@@ -12,15 +15,20 @@ import { categories, getCategoryCounts } from "@/registry/tools";
  *
  * Server Component.
  */
-export function CategoryGrid() {
+export function CategoryGrid({
+  locale = defaultLocale,
+}: {
+  locale?: Locale;
+}) {
   const counts = getCategoryCounts();
+  const localized = localizeCategories(categories, locale);
 
   return (
     <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-      {categories.map((category) => (
+      {localized.map((category) => (
         <li key={category.slug}>
           <Link
-            href={`/tools/category/${category.slug}`}
+            href={localePath(locale, `/tools/category/${category.slug}`)}
             className="flex h-full items-start gap-3 rounded-xl border border-border p-4 transition-colors hover:border-primary/40 hover:bg-surface-sunken focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary-subtle text-primary">

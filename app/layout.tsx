@@ -8,30 +8,19 @@ import "./globals.css";
 /**
  * app/layout.tsx
  *
- * Root layout for the entire application. Every route (marketing, tools,
- * blog, auth, dashboard) renders inside this shell, so it should only
- * contain truly global concerns: fonts, base HTML structure, and default
- * (fallback) metadata. Section-specific chrome (headers/footers/sidebars)
- * belongs in each route group's own layout.tsx, added in later milestones.
+ * Root layout. Since Milestone 13 the user-facing language lives in
+ * app/[locale]/layout.tsx; this file keeps only the truly global shell —
+ * fonts, the pre-paint theme script, and fallback metadata.
+ *
+ * <html lang> is set to the default locale here because Next.js requires
+ * the root layout to own <html>; the locale layout re-declares lang and
+ * dir on its own wrapper, which is what assistive tech and the browser's
+ * bidi algorithm actually read for the page content.
  */
 
-/**
- * Fonts are self-hosted via Vercel's official `geist` package (wraps
- * next/font/local) instead of next/font/google. This makes builds
- * deterministic — no network fetch to fonts.googleapis.com at build time,
- * which is both faster and immune to third-party outages breaking deploys.
- * The packages expose the same `--font-geist-sans` / `--font-geist-mono`
- * CSS variables consumed by the @theme block in globals.css.
- */
 const geistSans = GeistSans;
 const geistMono = GeistMono;
 
-/**
- * Default metadata for the whole site. Individual pages can override any
- * of these fields via their own `generateMetadata` / `metadata` export;
- * Next.js merges them, so this acts as a sensible fallback (important for
- * SEO — every page should always resolve to a complete <title>/<meta>).
- */
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
@@ -44,18 +33,12 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   openGraph: {
     type: "website",
-    locale: "en_US",
     url: siteConfig.url,
     title: `${siteConfig.name} — ${siteConfig.tagline}`,
     description: siteConfig.description,
     siteName: siteConfig.name,
     images: [
-      {
-        url: siteConfig.ogImage,
-        width: 1200,
-        height: 630,
-        alt: siteConfig.name,
-      },
+      { url: siteConfig.ogImage, width: 1200, height: 630, alt: siteConfig.name },
     ],
   },
   twitter: {
@@ -64,40 +47,29 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [siteConfig.ogImage],
   },
-  icons: {
-    icon: "/favicon.ico",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  icons: { icon: "/favicon.ico" },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+    { media: "(prefers-color-scheme: light)", color: "#fbfaf9" },
+    { media: "(prefers-color-scheme: dark)", color: "#14161a" },
   ],
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {/*
-        ThemeScript runs before paint and may add `.dark` to <html>, which
-        the server can't predict — hence suppressHydrationWarning above.
-      */}
       <head>
         <ThemeScript />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-surface text-foreground`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground`}
       >
         {children}
       </body>

@@ -3,37 +3,42 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Badge } from "@/components/ui/Badge";
+import { localePath } from "@/i18n/paths";
+import type { Locale } from "@/i18n/config";
 import type { NavItem } from "@/config/navigation";
 
 /**
  * components/layout/NavLink.tsx
  *
- * A single navigation link that knows whether it's the current page and
- * styles itself accordingly. Client component only because active-state
- * detection needs `usePathname()`; keeping this tiny means Header itself
- * can stay a server component.
+ * A navigation link that knows whether it's the current page. Client
+ * component because active-state detection needs usePathname(); keeping
+ * it small lets the header stay mostly server-rendered.
  *
- * Used by both the desktop nav and the mobile menu (via the `variant`
- * prop) so link behavior — active styling, "Soon" badges, aria-current —
- * is implemented exactly once.
+ * Locale-aware: hrefs are prefixed with the active locale, and the active
+ * check compares against the prefixed path so /ar/tools highlights
+ * "Tools" exactly like /en/tools does.
  */
 
 interface NavLinkProps {
   item: NavItem;
+  locale: Locale;
+  soonLabel: string;
   /** "desktop" = inline header link; "mobile" = full-width menu row. */
   variant?: "desktop" | "mobile";
-  /** Called on navigation, e.g. to close the mobile menu. */
   onNavigate?: () => void;
 }
 
 export function NavLink({
   item,
+  locale,
+  soonLabel,
   variant = "desktop",
   onNavigate,
 }: NavLinkProps) {
   const pathname = usePathname();
+  const href = localePath(locale, item.href);
   const isActive =
-    item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+    item.href === "/" ? pathname === href : pathname.startsWith(href);
 
   const base =
     variant === "desktop"
@@ -41,18 +46,18 @@ export function NavLink({
       : "flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
   const state = isActive
-    ? "text-foreground bg-surface-sunken"
-    : "text-foreground-muted hover:text-foreground hover:bg-surface-sunken";
+    ? "text-foreground bg-secondary"
+    : "text-foreground-muted hover:text-foreground hover:bg-secondary";
 
   return (
     <Link
-      href={item.href}
+      href={href}
       aria-current={isActive ? "page" : undefined}
       onClick={onNavigate}
       className={`${base} ${state}`}
     >
       {item.title}
-      {item.comingSoon && <Badge variant="primary">Soon</Badge>}
+      {item.comingSoon && <Badge variant="primary">{soonLabel}</Badge>}
     </Link>
   );
 }

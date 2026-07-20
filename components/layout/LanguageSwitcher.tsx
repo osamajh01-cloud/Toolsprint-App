@@ -1,80 +1,87 @@
 "use client";
 
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useTransition } from "react";
+import {
+  LOCALE_COOKIE,
+  isLocale,
+  locales,
+  localeMeta,
+  type Locale,
+} from "@/i18n/config";
 
 /**
  * components/layout/LanguageSwitcher.tsx
  *
- * PLACEHOLDER (Milestone 2): a visual EN | AR switch that stores the
- * selection locally but does not yet change the page language — real i18n
- * (routing, translated content, RTL layout for Arabic) is a deferred
- * post-roadmap milestone. Shipping the control now reserves its place in
- * the header design and lets us measure interest in Arabic via analytics
- * later.
+ * Real language switching (Milestone 13 — this replaces the Milestone 2
+ * placeholder). Selecting a language:
+ *   1. writes the choice to a long-lived cookie, so middleware honors it
+ *      on later visits instead of re-detecting from Accept-Language, and
+ *   2. navigates to the SAME page in the other language by swapping the
+ *      locale segment — the user keeps their place instead of being sent
+ *      back to the homepage.
  *
- * Accessibility: a radiogroup of two options; the active language is
- * announced via aria-checked. Selecting Arabic shows a brief "coming soon"
- * note instead of silently doing nothing — controls should never appear
- * broken.
+ * Accessibility: a radiogroup whose options are labeled with each
+ * language's own endonym ("English", "العربية"), so a screen reader in
+ * either language announces something meaningful. `lang` is set per
+ * option so the Arabic label is pronounced with Arabic phonology.
  */
 
-type Language = "en" | "ar";
+interface LanguageSwitcherProps {
+  locale: Locale;
+  label: string;
+}
 
-const languages: { code: Language; label: string; name: string }[] = [
-  { code: "en", label: "EN", name: "English" },
-  { code: "ar", label: "AR", name: "Arabic" },
-];
+export function LanguageSwitcher({ locale, label }: LanguageSwitcherProps) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
-export function LanguageSwitcher() {
-  const [active, setActive] = useState<Language>("en");
-  const [showNote, setShowNote] = useState(false);
+  function switchTo(next: Locale) {
+    if (next === locale) return;
 
-  function select(code: Language) {
-    setActive(code);
-    // Arabic isn't available yet — tell the user instead of failing silently.
-    setShowNote(code === "ar");
-    if (code === "ar") {
-      window.setTimeout(() => {
-        setShowNote(false);
-        setActive("en");
-      }, 2000);
+    // Persist the explicit choice for one year.
+    document.cookie = `${LOCALE_COOKIE}=${next};path=/;max-age=31536000;samesite=lax`;
+
+    // Swap the leading locale segment, keeping the rest of the path.
+    const segments = pathname.split("/");
+    if (isLocale(segments[1])) {
+      segments[1] = next;
+    } else {
+      segments.splice(1, 0, next);
     }
+    startTransition(() => router.push(segments.join("/") || `/${next}`));
   }
 
   return (
-    <div className="relative">
-      <div
-        role="radiogroup"
-        aria-label="Language"
-        className="inline-flex items-center rounded-full border border-border p-0.5 text-xs font-medium"
-      >
-        {languages.map((lang) => (
+    <div
+      role="radiogroup"
+      aria-label={label}
+      aria-busy={isPending || undefined}
+      className="inline-flex items-center rounded-full border border-border p-0.5 text-xs font-medium"
+    >
+      {locales.map((code) => {
+        const meta = localeMeta[code];
+        const active = code === locale;
+        return (
           <button
-            key={lang.code}
+            key={code}
             type="button"
             role="radio"
-            aria-checked={active === lang.code}
-            aria-label={lang.name}
-            onClick={() => select(lang.code)}
+            aria-checked={active}
+            aria-label={meta.name}
+            lang={meta.htmlLang}
+            onClick={() => switchTo(code)}
             className={`rounded-full px-2.5 py-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
-              active === lang.code
-                ? "bg-surface-sunken text-foreground"
+              active
+                ? "bg-secondary text-foreground"
                 : "text-foreground-muted hover:text-foreground"
             }`}
           >
-            {lang.label}
+            {meta.short}
           </button>
-        ))}
-      </div>
-
-      {showNote && (
-        <p
-          role="status"
-          className="absolute right-0 top-full z-50 mt-2 whitespace-nowrap rounded-md border border-border bg-surface px-3 py-1.5 text-xs text-foreground-muted shadow-sm"
-        >
-          العربية قريباً — Arabic is coming soon
-        </p>
-      )}
+        );
+      })}
     </div>
   );
 }

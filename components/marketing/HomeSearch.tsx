@@ -5,6 +5,11 @@ import { SearchBar } from "@/components/shared/SearchBar";
 import { ToolIcon } from "@/components/shared/ToolIcon";
 import { Badge } from "@/components/ui/Badge";
 import { useToolSearch } from "@/hooks/use-tool-search";
+import { t } from "@/i18n/dictionary";
+import { localePath } from "@/i18n/paths";
+import { type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries/en";
+import { tools } from "@/registry/tools";
 
 /**
  * components/marketing/HomeSearch.tsx
@@ -21,8 +26,14 @@ import { useToolSearch } from "@/hooks/use-tool-search";
 
 const RESULT_LIMIT = 6;
 
-export function HomeSearch() {
-  const { query, setQuery, results, isFiltering } = useToolSearch();
+export function HomeSearch({
+  locale,
+  dictionary,
+}: {
+  locale: Locale;
+  dictionary: Dictionary;
+}) {
+  const { query, setQuery, results, isFiltering } = useToolSearch(locale);
   const visible = results.slice(0, RESULT_LIMIT);
 
   return (
@@ -30,15 +41,15 @@ export function HomeSearch() {
       <SearchBar
         value={query}
         onChange={setQuery}
-        placeholder="Search tools — try “pdf”, “compress”, or “qr”…"
-        label="Search tools"
+        placeholder={t(dictionary.tools.searchPlaceholder, { count: tools.length })}
+        label={dictionary.tools.searchLabel}
         className="mx-auto w-full max-w-xl"
       />
 
       {isFiltering && (
         <div className="mx-auto w-full max-w-xl">
           <p aria-live="polite" className="sr-only">
-            {results.length} {results.length === 1 ? "tool" : "tools"} found
+            {t(dictionary.search.resultsFound, { count: results.length })}
           </p>
 
           {visible.length > 0 ? (
@@ -46,7 +57,7 @@ export function HomeSearch() {
               {visible.map((tool) => (
                 <li key={tool.id}>
                   <Link
-                    href={`/tools/${tool.slug}`}
+                    href={localePath(locale, `/tools/${tool.slug}`)}
                     className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   >
                     <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-md bg-primary-subtle text-primary">
@@ -66,22 +77,22 @@ export function HomeSearch() {
               {results.length > RESULT_LIMIT && (
                 <li className="px-3 py-2">
                   <Link
-                    href="/tools"
+                    href={localePath(locale, "/tools")}
                     className="rounded-sm text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   >
-                    See all {results.length} matches in the directory →
+                    {t(dictionary.search.seeAllMatches, { count: results.length })}
                   </Link>
                 </li>
               )}
             </ul>
           ) : (
             <p className="rounded-xl border border-dashed border-border px-4 py-6 text-center text-sm text-foreground-muted">
-              No tools match “{query.trim()}”.{" "}
+              {t(dictionary.search.noMatches, { query: query.trim() })}{" "}
               <Link
-                href="/tools"
+                href={localePath(locale, "/tools")}
                 className="font-medium text-primary hover:underline"
               >
-                Browse the full catalog
+                {dictionary.search.browseCatalog}
               </Link>
               .
             </p>
@@ -91,9 +102,9 @@ export function HomeSearch() {
 
       {!isFiltering && (
         <p className="text-center text-xs text-foreground-muted">
-          <Badge variant="outline">Tip</Badge>{" "}
+          <Badge variant="outline">{dictionary.home.tip}</Badge>{" "}
           <span className="ml-1">
-            Every tool runs in your browser — nothing is uploaded.
+            {dictionary.home.searchTip}
           </span>
         </p>
       )}

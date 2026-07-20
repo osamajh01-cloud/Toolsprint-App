@@ -1,13 +1,15 @@
+import type { Dictionary } from "@/i18n/dictionaries/en";
+
 /**
  * config/navigation.ts
  *
- * Single source of truth for every navigation tree on the site: the header
- * links, the mobile menu (same items), and the footer columns. Header,
- * MobileNav, and Footer all render from this file, so adding a page later
- * (e.g. real Blog in Milestone 10) means editing one object — never JSX.
+ * Navigation structure — routes and flags only. Since Milestone 13 the
+ * LABELS come from the dictionary rather than living here, so nav text is
+ * translated without duplicating the structure per language. Callers pass
+ * a dictionary and get back a fully labeled tree.
  *
- * `comingSoon` marks routes that exist as placeholder pages but aren't
- * launched yet; nav components render a small "Soon" badge for them.
+ * Paths are locale-agnostic ("/tools"); components prefix them with the
+ * active locale via localePath().
  */
 
 export interface NavItem {
@@ -15,10 +17,7 @@ export interface NavItem {
   href: string;
   /** Renders a "Soon" badge next to the link. */
   comingSoon?: boolean;
-  /**
-   * The target page does not exist yet (ships in a later milestone).
-   * Nav components must render these as inert text — never a dead link.
-   */
+  /** Target page doesn't exist yet — render as inert text, never a link. */
   disabled?: boolean;
   /** External links open in a new tab with rel security attributes. */
   external?: boolean;
@@ -30,51 +29,49 @@ export interface NavColumn {
 }
 
 /** Primary navigation shown in the header and the mobile menu. */
-export const mainNav: NavItem[] = [
-  { title: "Home", href: "/" },
-  { title: "Tools", href: "/tools" },
-  { title: "Pricing", href: "/pricing", comingSoon: true },
-  { title: "Blog", href: "/blog", comingSoon: true },
-];
+export function getMainNav(dictionary: Dictionary): NavItem[] {
+  const { nav } = dictionary;
+  return [
+    { title: nav.home, href: "/" },
+    { title: nav.tools, href: "/tools" },
+    { title: nav.pricing, href: "/pricing", comingSoon: true },
+    { title: nav.blog, href: "/blog", comingSoon: true },
+  ];
+}
 
 /** Footer link columns: Product, Resources, Legal, Social. */
-export const footerNav: NavColumn[] = [
-  {
-    title: "Product",
-    items: [
-      { title: "All tools", href: "/tools" },
-      { title: "Pricing", href: "/pricing", comingSoon: true },
-      { title: "What's new", href: "/blog", comingSoon: true },
-    ],
-  },
-  {
-    title: "Resources",
-    items: [
-      { title: "Blog", href: "/blog", comingSoon: true },
-      { disabled: true, title: "Contact", href: "/contact", comingSoon: true },
-      { disabled: true, title: "About", href: "/about", comingSoon: true },
-    ],
-  },
-  {
-    title: "Legal",
-    items: [
-      { disabled: true, title: "Privacy policy", href: "/privacy", comingSoon: true },
-      { disabled: true, title: "Terms of service", href: "/terms", comingSoon: true },
-    ],
-  },
-  {
-    title: "Social",
-    items: [
-      {
-        title: "X (Twitter)",
-        href: "https://twitter.com/toolsprint",
-        external: true,
-      },
-      {
-        title: "GitHub",
-        href: "https://github.com/toolsprint",
-        external: true,
-      },
-    ],
-  },
-];
+export function getFooterNav(dictionary: Dictionary): NavColumn[] {
+  const { footer } = dictionary;
+  return [
+    {
+      title: footer.product,
+      items: [
+        { title: footer.allTools, href: "/tools" },
+        { title: footer.pricing, href: "/pricing", comingSoon: true },
+        { title: footer.whatsNew, href: "/blog", comingSoon: true },
+      ],
+    },
+    {
+      title: footer.resources,
+      items: [
+        { title: footer.blog, href: "/blog", comingSoon: true },
+        { disabled: true, title: footer.contact, href: "/contact", comingSoon: true },
+        { disabled: true, title: footer.about, href: "/about", comingSoon: true },
+      ],
+    },
+    {
+      title: footer.legal,
+      items: [
+        { disabled: true, title: footer.privacy, href: "/privacy", comingSoon: true },
+        { disabled: true, title: footer.terms, href: "/terms", comingSoon: true },
+      ],
+    },
+    {
+      title: footer.social,
+      items: [
+        { title: "X (Twitter)", href: "https://twitter.com/toolsprint", external: true },
+        { title: "GitHub", href: "https://github.com/toolsprint", external: true },
+      ],
+    },
+  ];
+}

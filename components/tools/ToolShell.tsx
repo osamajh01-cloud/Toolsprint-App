@@ -4,6 +4,11 @@ import { Button } from "@/components/ui/Button";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { ToolIcon } from "@/components/shared/ToolIcon";
 import { getCategory } from "@/registry/tools/categories";
+import { localizeCategory } from "@/i18n/content";
+import { t } from "@/i18n/dictionary";
+import { localePath } from "@/i18n/paths";
+import { defaultLocale, type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries/en";
 import type { Tool } from "@/types/tool";
 
 /**
@@ -27,23 +32,34 @@ import type { Tool } from "@/types/tool";
 
 interface ToolShellProps {
   tool: Tool;
+  locale?: Locale;
+  dictionary: Dictionary;
   children?: ReactNode;
 }
 
-export function ToolShell({ tool, children }: ToolShellProps) {
-  const category = getCategory(tool.category);
+export function ToolShell({
+  tool,
+  locale = defaultLocale,
+  dictionary,
+  children,
+}: ToolShellProps) {
+  const rawCategory = getCategory(tool.category);
+  const category = rawCategory
+    ? localizeCategory(rawCategory, locale)
+    : undefined;
 
   return (
     <article className="flex flex-col gap-8">
       <Breadcrumbs
+        label={dictionary.nav.breadcrumb}
         items={[
-          { title: "Home", href: "/" },
-          { title: "Tools", href: "/tools" },
+          { title: dictionary.nav.home, href: localePath(locale, "/") },
+          { title: dictionary.nav.tools, href: localePath(locale, "/tools") },
           ...(category
             ? [
                 {
                   title: category.title,
-                  href: `/tools/category/${category.slug}`,
+                  href: localePath(locale, `/tools/category/${category.slug}`),
                 },
               ]
             : []),
@@ -63,7 +79,7 @@ export function ToolShell({ tool, children }: ToolShellProps) {
             </h1>
             <div className="flex flex-wrap gap-1.5">
               {category && <Badge variant="outline">{category.title}</Badge>}
-              <Badge variant="primary">{tool.premium ? "Pro" : "Free"}</Badge>
+              <Badge variant="primary">{tool.premium ? dictionary.tools.pro : dictionary.tools.free}</Badge>
             </div>
           </div>
         </div>
@@ -73,7 +89,7 @@ export function ToolShell({ tool, children }: ToolShellProps) {
         </p>
 
         {tool.tags.length > 0 && (
-          <ul aria-label="Related keywords" className="flex flex-wrap gap-1.5">
+          <ul aria-label={dictionary.tools.relatedKeywords} className="flex flex-wrap gap-1.5">
             {tool.tags.map((tag) => (
               <li key={tag}>
                 <Badge>{tag}</Badge>
@@ -86,20 +102,22 @@ export function ToolShell({ tool, children }: ToolShellProps) {
       {/* Tool body: real UI when provided, launch notice otherwise */}
       {children ?? (
         <section
-          aria-label="Availability"
+          aria-label={dictionary.tools.launchingSoon}
           className="flex flex-col items-center gap-4 rounded-xl border border-dashed border-border bg-surface-sunken px-6 py-14 text-center"
         >
-          <Badge variant="primary">Launching soon</Badge>
+          <Badge variant="primary">{dictionary.tools.launchingSoon}</Badge>
           <h2 className="text-xl font-semibold">
-            {tool.title} is in the final stretch
+            {t(dictionary.tools.comingSoonTitle, { tool: tool.title })}
           </h2>
           <p className="max-w-md text-sm text-foreground-muted">
-            This tool is being built right now and will run entirely in your
-            browser — free, private, and with no sign-up. In the meantime,
-            the rest of the catalog is one click away.
+            {dictionary.tools.comingSoonBody}
           </p>
-          <Button href="/tools" variant="secondary" size="sm">
-            Browse all tools
+          <Button
+            href={localePath(locale, "/tools")}
+            variant="secondary"
+            size="sm"
+          >
+            {dictionary.tools.browseAll}
           </Button>
         </section>
       )}
