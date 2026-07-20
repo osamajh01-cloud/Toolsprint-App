@@ -1,10 +1,10 @@
-import type { CategorySlug, CollectionSlug, Tool } from "@/types/tool";
+import type { CategorySlug, Tool } from "@/types/tool";
 import { categories, getCategory } from "@/registry/tools/categories";
-import {
-  collections,
-  getCollection,
-  RECENT_TOOL_COUNT,
-} from "@/registry/tools/collections";
+
+/** How many of the newest tools appear in "Recently added" AND carry the
+ *  "New" badge. Deterministic (rank-based, not clock-based) so server and
+ *  client always agree — no hydration mismatch at a date boundary. */
+export const RECENT_TOOL_COUNT = 5;
 
 import { wordCounter } from "@/registry/tools/word-counter";
 import { caseConverter } from "@/registry/tools/case-converter";
@@ -114,10 +114,10 @@ export function getCategoryCounts(): Record<CategorySlug, number> {
  * (homepage, badges, search ranking) by editing only its own file.
  */
 
-/** Tools in a collection, ordered by displayOrder (unset sorts last). */
-export function getToolsInCollection(collection: CollectionSlug): Tool[] {
+/** All popular tools, ordered by displayOrder (unset sorts last). */
+export function getPopularTools(): Tool[] {
   return tools
-    .filter((tool) => tool.collections?.includes(collection))
+    .filter((tool) => tool.popular)
     .sort(
       (a, b) =>
         (a.displayOrder ?? Number.MAX_SAFE_INTEGER) -
@@ -126,7 +126,21 @@ export function getToolsInCollection(collection: CollectionSlug): Tool[] {
 }
 
 export function isPopular(tool: Tool): boolean {
-  return tool.collections?.includes("popular") ?? false;
+  return tool.popular === true;
+}
+
+/** Honest usage indicator for tool cards. The product has no analytics
+ *  yet, so instead of inventing absolute numbers ("12k uses/mo") the tier
+ *  is derived from real registry metadata and rendered as a relative
+ *  meter: popular → high, newest → new, featured → growing, else steady.
+ *  When real usage data exists, only this function needs to change. */
+export type UsageTier = "high" | "growing" | "new" | "steady";
+
+export function usageTier(tool: Tool): UsageTier {
+  if (isPopular(tool)) return "high";
+  if (isNew(tool)) return "new";
+  if (tool.featured) return "growing";
+  return "steady";
 }
 
 /** Newest tools by createdAt, most recent first (ties broken by id so the
@@ -163,4 +177,4 @@ export function sortByRank(list: Tool[]): Tool[] {
   return [...list].sort((a, b) => toolRank(a) - toolRank(b));
 }
 
-export { categories, getCategory, collections, getCollection, RECENT_TOOL_COUNT };
+export { categories, getCategory };

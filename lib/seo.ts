@@ -66,3 +66,32 @@ export function breadcrumbJsonLd(
 export function jsonLdString(data: object): string {
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }
+
+/** schema.org FAQPage — generated from the same dictionary array the
+ *  visible FAQ renders, so the markup and the schema can never disagree. */
+export function faqJsonLd(items: { q: string; a: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+}
+
+/** schema.org Organization for the homepage. */
+export function organizationJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    logo: `${siteConfig.url}${siteConfig.ogImage}`,
+    sameAs: [
+      "https://twitter.com/toolsprint",
+      "https://github.com/toolsprint",
+    ],
+  };
+}

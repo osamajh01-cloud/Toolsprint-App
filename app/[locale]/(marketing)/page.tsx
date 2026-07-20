@@ -1,32 +1,39 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/marketing/Hero";
 import { HomeSearch } from "@/components/marketing/HomeSearch";
+import { StatsBand } from "@/components/marketing/StatsBand";
+import { WhyChooseUs } from "@/components/marketing/WhyChooseUs";
+import { Faq } from "@/components/marketing/Faq";
+import { CtaBand } from "@/components/marketing/CtaBand";
 import { CategoryGrid } from "@/components/shared/CategoryGrid";
 import { ToolSection } from "@/components/shared/ToolSection";
 import { Container } from "@/components/ui/Container";
 import {
+  getFeaturedTools,
+  getPopularTools,
   getRecentTools,
-  getToolsInCollection,
-  sortByRank,
-  tools,
 } from "@/registry/tools";
-import { getDictionary, t } from "@/i18n/dictionary";
 import { localizeTools } from "@/i18n/content";
+import { getDictionary } from "@/i18n/dictionary";
 import { localeAlternates, openGraphLocale } from "@/i18n/seo";
+import { faqJsonLd, jsonLdString, organizationJsonLd } from "@/lib/seo";
 import { defaultLocale, isLocale, type Locale } from "@/i18n/config";
 
 /**
  * app/[locale]/(marketing)/page.tsx
  *
- * The homepage, in whichever language the URL asks for. Section order
- * (from Milestone 11.1): Hero → Search → Most Popular → Recently Added →
- * Browse by Category → All Tools.
+ * The homepage as a full product landing page (Milestone 14). Section
+ * order: Hero → Search → Stats → Most Popular → Featured → Recently
+ * Added → Categories → Why ToolSprint → FAQ → CTA.
  *
- * Everything except the search box is a Server Component reading from the
- * registry and the dictionary, so each language is statically generated
- * and fully crawlable. Tool text is localized through i18n/content, which
- * swaps the human-readable fields while leaving slugs and structure —
- * and therefore URLs — identical across languages.
+ * Registry-driven throughout: Popular reads the `popular` flag, Featured
+ * the `featured` flag, Recently Added derives from createdAt, and the
+ * stats band counts tools/categories/locales — no list on this page is
+ * hardcoded. HomeSearch remains the only client island; everything else
+ * is statically generated per locale.
+ *
+ * Structured data: Organization JSON-LD plus FAQPage JSON-LD generated
+ * from the same dictionary array the visible FAQ renders.
  */
 
 interface PageProps {
@@ -57,15 +64,29 @@ export default async function HomePage({ params }: PageProps) {
   const active: Locale = isLocale(locale) ? locale : defaultLocale;
   const dictionary = await getDictionary(active);
 
-  const popularTools = localizeTools(getToolsInCollection("popular"), active);
+  const popularTools = localizeTools(getPopularTools(), active);
+  const featuredTools = localizeTools(getFeaturedTools(), active);
   const recentTools = localizeTools(getRecentTools(), active);
-  const allTools = localizeTools(sortByRank(tools), active);
 
   return (
     <>
+      {/* Structured data: Organization + FAQ (same source as visible FAQ) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(organizationJsonLd()) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdString(faqJsonLd(dictionary.faq.items)),
+        }}
+      />
+
       <Hero locale={active} dictionary={dictionary} />
 
-      <Container className="flex flex-col gap-16 pb-24">
+      <StatsBand dictionary={dictionary} />
+
+      <Container className="flex flex-col gap-16 py-16 pb-24">
         <HomeSearch locale={active} dictionary={dictionary} />
 
         <ToolSection
@@ -74,6 +95,16 @@ export default async function HomePage({ params }: PageProps) {
           title={dictionary.home.popularTitle}
           description={dictionary.home.popularDescription}
           tools={popularTools}
+          locale={active}
+          dictionary={dictionary}
+        />
+
+        <ToolSection
+          id="featured"
+          emoji="✨"
+          title={dictionary.featuredSection.title}
+          description={dictionary.featuredSection.description}
+          tools={featuredTools}
           locale={active}
           dictionary={dictionary}
         />
@@ -101,17 +132,11 @@ export default async function HomePage({ params }: PageProps) {
           <CategoryGrid locale={active} />
         </section>
 
-        <ToolSection
-          id="all-tools"
-          title={dictionary.home.allToolsTitle}
-          description={t(dictionary.home.allToolsDescription, {
-            count: tools.length,
-          })}
-          tools={allTools}
-          locale={active}
-          dictionary={dictionary}
-          action={{ href: "/tools", label: dictionary.home.openDirectory }}
-        />
+        <WhyChooseUs dictionary={dictionary} />
+
+        <Faq dictionary={dictionary} />
+
+        <CtaBand locale={active} dictionary={dictionary} />
       </Container>
     </>
   );

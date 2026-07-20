@@ -19,7 +19,7 @@ export const pdfSplit: Tool = {
   icon: "file",
   featured: false,
   premium: false,
-  collections: ["popular"],
+  popular: true,
   displayOrder: 2,
   createdAt: "2026-07-11",
   languageSupport: ["en"],

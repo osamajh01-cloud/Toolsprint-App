@@ -23,7 +23,7 @@ export const passwordGenerator: Tool = {
   "icon": "key",
   "featured": false,
   "premium": false,
-  collections: ["popular"],
+  popular: true,
   displayOrder: 6,
   createdAt: "2026-06-20",
   "languageSupport": [

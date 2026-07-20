@@ -51,10 +51,6 @@ export interface ToolCategory {
   icon: ToolIconName;
 }
 
-/** Editorial collections — independent of categories. A tool has exactly
- *  one category but may sit in zero or more collections. */
-export type CollectionSlug = "popular";
-
 export interface Tool {
   /** Stable unique identifier (never changes, even if slug/title do). */
   id: string;
@@ -72,8 +68,11 @@ export interface Tool {
   featured: boolean;
   /** Reserved for Milestone 14+ plan gating. All launch tools are free. */
   premium: boolean;
-  /** Collections this tool belongs to (e.g. "popular"). Optional. */
-  collections?: CollectionSlug[];
+  /** Marks a most-popular tool; the homepage's Popular section and card
+   *  badges are driven by this flag (Milestone 14 — replaces the earlier
+   *  single-member collections array with the flat field the spec asks
+   *  for). Ordering within the section comes from displayOrder. */
+  popular?: boolean;
   /** Manual ordering inside collections/spotlights; lower = earlier.
    *  Tools without one sort after those that have it. */
   displayOrder?: number;

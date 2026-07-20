@@ -19,7 +19,7 @@ export const qrCodeGenerator: Tool = {
   icon: "qr",
   featured: false,
   premium: false,
-  collections: ["popular"],
+  popular: true,
   displayOrder: 5,
   createdAt: "2026-07-02",
   languageSupport: ["en"],

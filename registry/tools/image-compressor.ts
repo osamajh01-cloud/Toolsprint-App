@@ -19,7 +19,7 @@ export const imageCompressor: Tool = {
   icon: "image",
   featured: false,
   premium: false,
-  collections: ["popular"],
+  popular: true,
   displayOrder: 4,
   createdAt: "2026-07-05",
   languageSupport: ["en"],

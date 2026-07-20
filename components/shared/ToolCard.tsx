@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { ToolIcon } from "@/components/shared/ToolIcon";
 import { getCategory } from "@/registry/tools/categories";
-import { isNew, isPopular } from "@/registry/tools";
+import { isNew, isPopular, usageTier, type UsageTier } from "@/registry/tools";
 import { localizeCategory } from "@/i18n/content";
 import { localePath } from "@/i18n/paths";
 import { defaultLocale, type Locale } from "@/i18n/config";
@@ -29,6 +29,45 @@ interface ToolCardProps {
   dictionary: Dictionary;
 }
 
+
+/** Filled bars per tier for the relative usage meter. */
+const TIER_BARS: Record<UsageTier, number> = {
+  high: 3,
+  growing: 2,
+  steady: 2,
+  new: 1,
+};
+
+function UsageMeter({
+  tier,
+  label,
+  tierLabel,
+}: {
+  tier: UsageTier;
+  label: string;
+  tierLabel: string;
+}) {
+  const filled = TIER_BARS[tier];
+  return (
+    <span
+      className="inline-flex items-center gap-1.5 text-xs text-foreground-subtle"
+      aria-label={`${label}: ${tierLabel}`}
+    >
+      <span aria-hidden="true" className="inline-flex items-end gap-0.5">
+        {[1, 2, 3].map((bar) => (
+          <span
+            key={bar}
+            className={`w-1 rounded-sm ${
+              bar === 1 ? "h-1.5" : bar === 2 ? "h-2.5" : "h-3.5"
+            } ${bar <= filled ? "bg-primary" : "bg-border-strong"}`}
+          />
+        ))}
+      </span>
+      {tierLabel}
+    </span>
+  );
+}
+
 export function ToolCard({
   tool,
   locale = defaultLocale,
@@ -39,6 +78,9 @@ export function ToolCard({
 
   // Status badges, all derived from registry metadata — a tool can carry
   // several at once (e.g. Popular + New).
+  const tier = usageTier(tool);
+  const tierLabel = dictionary.usage[tier];
+
   const statusBadges: string[] = [];
   if (isPopular(tool)) statusBadges.push(dictionary.tools.popular);
   if (isNew(tool)) statusBadges.push(dictionary.tools.new);
@@ -74,20 +116,27 @@ export function ToolCard({
         </p>
       </div>
 
-      <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">
-        {dictionary.tools.openTool}
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="size-4 transition-transform group-hover:translate-x-0.5"
-        >
-          <path d="M5 12h14m-6-6 6 6-6 6" />
-        </svg>
+      <span className="mt-auto flex items-center justify-between gap-3">
+        <UsageMeter
+          tier={tier}
+          label={dictionary.usage.label}
+          tierLabel={tierLabel}
+        />
+        <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">
+          {dictionary.tools.openTool}
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="size-4 rtl:-scale-x-100 transition-transform motion-safe:group-hover:translate-x-0.5 motion-safe:rtl:group-hover:-translate-x-0.5"
+          >
+            <path d="M5 12h14m-6-6 6 6-6 6" />
+          </svg>
+        </span>
       </span>
     </Link>
   );

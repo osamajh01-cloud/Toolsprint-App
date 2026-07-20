@@ -87,6 +87,9 @@ export const en = {
     noMatches: "No tools match “{query}”.",
     browseCatalog: "Browse the full catalog",
     seeAllMatches: "See all {count} matches in the directory →",
+    recent: "Recent:",
+    clearRecent: "Clear",
+    popularSearches: "Popular:",
     resultsFound: "{count} tools found",
   },
   footer: {
@@ -131,6 +134,80 @@ export const en = {
       "An unexpected error interrupted this page. Reloading usually fixes it.",
     tryAgain: "Try again",
     backToTools: "Back to tools",
+  },
+  stats: {
+    heading: "ToolSprint at a glance",
+    totalTools: "Tools",
+    categories: "Categories",
+    languages: "Languages",
+    browserProcessing: "Browser processing",
+    browserProcessingValue: "100%",
+  },
+  usage: {
+    label: "Usage",
+    high: "High usage",
+    growing: "Growing fast",
+    new: "Just launched",
+    steady: "Steady use",
+  },
+  featuredSection: {
+    title: "Featured tools",
+    description:
+      "Hand-picked utilities that show what the platform can do — start here if you're new.",
+  },
+  why: {
+    title: "Why ToolSprint",
+    description:
+      "Built on one principle: your files are yours. Everything else follows from that.",
+    privacyTitle: "Privacy first",
+    privacyBody:
+      "Files are processed on your device and never uploaded. There's no server that could see them.",
+    fastTitle: "Instant results",
+    fastBody:
+      "No upload queues, no processing servers, no waiting rooms — work starts the moment you drop a file.",
+    freeTitle: "Free to use",
+    freeBody:
+      "Every tool is free, with no account, no trial clock, and no usage limits.",
+    offlineTitle: "Works offline",
+    offlineBody:
+      "Once a tool page is loaded, most tools keep working without a connection — processing is local.",
+    noUploadTitle: "No uploads, ever",
+    noUploadBody:
+      "Where other sites upload your PDFs and photos to compress them, ToolSprint does the work in the browser itself.",
+  },
+  faq: {
+    title: "Frequently asked questions",
+    items: [
+      {
+        q: "Are my files uploaded to a server?",
+        a: "No. Every tool runs entirely in your browser using local processing. Your files never leave your device — there is no upload step at all.",
+      },
+      {
+        q: "Is ToolSprint really free?",
+        a: "Yes. All tools are free to use with no account, no trial period, and no usage limits. Paid plans with extra features may arrive later, but what's free today stays free.",
+      },
+      {
+        q: "Do I need to create an account?",
+        a: "No. Open any tool and start working immediately — there is no sign-up, login, or email required.",
+      },
+      {
+        q: "Which languages does ToolSprint support?",
+        a: "The interface is available in English and Arabic (with full right-to-left support), and the catalog is built to add more languages over time.",
+      },
+      {
+        q: "Do the tools work on mobile?",
+        a: "Yes. Every tool is responsive and touch-friendly, so PDF merging, image compression, and the rest work on phones and tablets as well as desktops.",
+      },
+      {
+        q: "How is this different from other online tools?",
+        a: "Most online converters upload your files to their servers. ToolSprint processes everything locally in your browser, which makes it faster for most jobs and private by design.",
+      },
+    ],
+  },
+  cta: {
+    title: "Ready to save some time?",
+    body: "Pick any of the {count} tools and start working — no sign-up, nothing to install.",
+    button: "Browse all tools",
   },
   common: {
     copy: "Copy",

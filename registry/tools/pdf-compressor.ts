@@ -19,7 +19,7 @@ export const pdfCompressor: Tool = {
   icon: "file",
   featured: false,
   premium: false,
-  collections: ["popular"],
+  popular: true,
   displayOrder: 3,
   createdAt: "2026-07-14",
   languageSupport: ["en"],
