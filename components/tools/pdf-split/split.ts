@@ -175,7 +175,7 @@ export async function splitPdf(
       group.pages.map((page) => page - 1),
     );
     for (const page of pages) output.addPage(page);
-    output.setProducer("ToolSprint PDF Split");
+    output.setProducer("TOOLAK PDF Split");
 
     outputs.push({
       bytes: await output.save(),

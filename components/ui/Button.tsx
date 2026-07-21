@@ -40,7 +40,7 @@ const baseStyles =
 
 const variantStyles: Record<Variant, string> = {
   primary:
-    "rounded-full bg-primary text-primary-foreground shadow-xs hover:bg-primary-hover",
+    "rounded-full bg-primary text-primary-foreground shadow-xs hover:bg-primary-hover hover:shadow-sm",
   secondary:
     "rounded-full bg-secondary text-secondary-foreground border border-border hover:border-border-strong hover:bg-surface-sunken",
   outline:

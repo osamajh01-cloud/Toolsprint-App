@@ -69,8 +69,8 @@ export function getFooterNav(dictionary: Dictionary): NavColumn[] {
     {
       title: footer.social,
       items: [
-        { title: "X (Twitter)", href: "https://twitter.com/toolsprint", external: true },
-        { title: "GitHub", href: "https://github.com/toolsprint", external: true },
+        { title: "X (Twitter)", href: "https://twitter.com/toolak", external: true },
+        { title: "GitHub", href: "https://github.com/toolak", external: true },
       ],
     },
   ];

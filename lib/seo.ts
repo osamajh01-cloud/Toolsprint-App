@@ -90,8 +90,8 @@ export function organizationJsonLd() {
     url: siteConfig.url,
     logo: `${siteConfig.url}${siteConfig.ogImage}`,
     sameAs: [
-      "https://twitter.com/toolsprint",
-      "https://github.com/toolsprint",
+      "https://twitter.com/toolak",
+      "https://github.com/toolak",
     ],
   };
 }

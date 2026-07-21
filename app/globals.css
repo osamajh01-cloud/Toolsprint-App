@@ -32,33 +32,33 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  /* — Surfaces: warm-tinted neutrals, not pure grey — */
-  --background: #fbfaf9;
+  /* — Surfaces: cool neutral greys (2026 tech-forward, not warm beige) — */
+  --background: #fcfcfd;
   --surface: #ffffff;
   --surface-raised: #ffffff;
-  --surface-sunken: #f4f2f0;
+  --surface-sunken: #f3f4f6;
 
   /* — Text hierarchy — */
-  --foreground: #1a1d21;
-  --foreground-muted: #5c6169;
-  --foreground-subtle: #83898f;
+  --foreground: #111318;
+  --foreground-muted: #565b66;
+  --foreground-subtle: #7c828d;
 
   /* — Borders — */
-  --border: #e6e2de;
-  --border-strong: #d2ccc6;
+  --border: #e7e8ec;
+  --border-strong: #d3d5db;
 
-  /* — Brand — */
-  --primary: #0f766e;
-  --primary-hover: #115e58;
+  /* — Brand: brighter teal primary + indigo-violet accent — */
+  --primary: #0b6f68;
+  --primary-hover: #0a5c56;
   --primary-foreground: #ffffff;
-  --primary-subtle: #e6f2f0;
+  --primary-subtle: #e4f3f1;
 
-  --secondary: #f4f2f0;
-  --secondary-foreground: #1a1d21;
+  --secondary: #f3f4f6;
+  --secondary-foreground: #111318;
 
-  --accent: #b45309;
+  --accent: #4f46e5;
   --accent-foreground: #ffffff;
-  --accent-subtle: #fdf3e7;
+  --accent-subtle: #ecebfd;
 
   /* — States — */
   --success: #15803d;
@@ -78,7 +78,7 @@
   --info-subtle: #e8f2f9;
 
   /* — Header glass — */
-  --header: rgba(251, 250, 249, 0.82);
+  --header: rgba(252, 252, 253, 0.82);
 
   /* — Elevation: tight, layered, low-opacity (never a big blurry blob) — */
   --shadow-xs: 0 1px 2px 0 rgb(26 29 33 / 0.05);
@@ -88,30 +88,30 @@
 }
 
 .dark {
-  --background: #14161a;
-  --surface: #1a1d22;
-  --surface-raised: #21252b;
-  --surface-sunken: #101216;
+  --background: #0e1014;
+  --surface: #171a1f;
+  --surface-raised: #1e2228;
+  --surface-sunken: #0a0c0f;
 
-  --foreground: #ecedee;
-  --foreground-muted: #9ba1a8;
-  --foreground-subtle: #767c84;
+  --foreground: #eceef1;
+  --foreground-muted: #9aa0aa;
+  --foreground-subtle: #767c86;
 
-  --border: #2b2f36;
-  --border-strong: #3c424a;
+  --border: #282c33;
+  --border-strong: #3a3f48;
 
   /* Brand lifts in dark so it stays legible on charcoal (AA on --surface). */
   --primary: #2dd4bf;
   --primary-hover: #5eead4;
-  --primary-foreground: #10201e;
-  --primary-subtle: #12312e;
+  --primary-foreground: #08201d;
+  --primary-subtle: #0f302c;
 
-  --secondary: #21252b;
-  --secondary-foreground: #ecedee;
+  --secondary: #1e2228;
+  --secondary-foreground: #eceef1;
 
-  --accent: #f59e0b;
-  --accent-foreground: #1f1400;
-  --accent-subtle: #2a2010;
+  --accent: #a5b4fc;
+  --accent-foreground: #12132e;
+  --accent-subtle: #1e1f45;
 
   --success: #4ade80;
   --success-foreground: #0c1f13;
@@ -129,7 +129,7 @@
   --info-foreground: #0b1c2e;
   --info-subtle: #13212f;
 
-  --header: rgba(20, 22, 26, 0.82);
+  --header: rgba(14, 16, 20, 0.82);
 
   /* Shadows carry less weight on dark; borders do the separating. */
   --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.30);

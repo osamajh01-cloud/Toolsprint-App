@@ -4,25 +4,26 @@
  * Single source of truth for site-wide constants: name, description, URL,
  * social links, and default SEO assets. Every place that needs these values
  * (root layout metadata, per-page generateMetadata, sitemap, JSON-LD, footer)
- * should import from here instead of hardcoding strings, so a rebrand or
- * domain change only requires editing this one file.
+ * imports from here instead of hardcoding strings, so the Milestone 15
+ * rebrand from "ToolSprint" to "TOOLAK" was almost entirely a matter of
+ * editing this one file.
  */
 
 export const siteConfig = {
-  name: "ToolSprint",
-  shortName: "ToolSprint",
-  tagline: "Save hours with powerful online tools.",
+  name: "TOOLAK",
+  shortName: "TOOLAK",
+  tagline: "Free online tools for everyone.",
   description:
-    "ToolSprint is a growing collection of free, fast, browser-based tools for developers, writers, and everyday tasks — no sign-up required.",
+    "TOOLAK is a growing collection of free, fast, browser-based tools for developers, writers, and everyday tasks — no sign-up required.",
   /**
    * NOTE: Update this once a production domain is connected in Vercel.
    * Using a placeholder now keeps metadata/sitemaps valid pre-launch.
    */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://toolsprint.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://toolak.vercel.app",
   ogImage: "/og/default.png",
   links: {
-    twitter: "https://twitter.com/toolsprint",
-    github: "https://github.com/toolsprint",
+    twitter: "https://twitter.com/toolak",
+    github: "https://github.com/toolak",
   },
   keywords: [
     "online tools",

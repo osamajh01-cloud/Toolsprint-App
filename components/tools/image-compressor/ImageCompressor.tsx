@@ -325,7 +325,7 @@ export function ImageCompressor() {
           name: withSuffix(item.file.name, "-compressed"),
           blob: item.compressedBlob!,
         })),
-        "toolsprint-compressed-images.zip",
+        "toolak-compressed-images.zip",
       );
     } finally {
       setZipping(false);

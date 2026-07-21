@@ -13,6 +13,11 @@
  * user input is interpolated), so dangerouslySetInnerHTML is safe here.
  */
 
+// Persistence key — deliberately keeps its original value across the
+// TOOLAK rebrand. Renaming it would orphan every existing visitor's
+// saved theme (they'd get a one-time flash of the wrong mode), which is
+// a functional regression for zero user-visible benefit — the string
+// never appears in the UI.
 const THEME_STORAGE_KEY = "toolsprint-theme";
 
 const script = `

@@ -24,7 +24,7 @@ import { defaultLocale, isLocale, type Locale } from "@/i18n/config";
  *
  * The homepage as a full product landing page (Milestone 14). Section
  * order: Hero → Search → Stats → Most Popular → Featured → Recently
- * Added → Categories → Why ToolSprint → FAQ → CTA.
+ * Added → Categories → Why TOOLAK → FAQ → CTA.
  *
  * Registry-driven throughout: Popular reads the `popular` flag, Featured
  * the `featured` flag, Recently Added derives from createdAt, and the
@@ -47,11 +47,11 @@ export async function generateMetadata({
   const active: Locale = isLocale(locale) ? locale : defaultLocale;
   const dictionary = await getDictionary(active);
 
-  const title = `ToolSprint — ${dictionary.home.heroTitle}`;
+  const title = `${dictionary.home.heroTitle} — TOOLAK`;
   const description = dictionary.home.heroSubtitle;
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: localeAlternates(active, "/"),
     openGraph: { title, description, ...openGraphLocale(active) },

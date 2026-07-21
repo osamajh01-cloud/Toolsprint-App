@@ -49,7 +49,9 @@ export function isLocale(value: string): value is Locale {
   return (locales as readonly string[]).includes(value);
 }
 
-/** Cookie the switcher writes and middleware reads on later visits. */
+/** Cookie the switcher writes and middleware reads on later visits.
+ *  Value kept stable across the TOOLAK rebrand so existing visitors don't
+ *  lose their saved language; the name is never shown in the UI. */
 export const LOCALE_COOKIE = "toolsprint-locale";
 
 /**

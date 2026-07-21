@@ -16,7 +16,7 @@ import {
 /**
  * components/tools/word-counter/WordCounter.tsx
  *
- * The first fully functional ToolSprint tool. Client component (it's all
+ * The first fully functional TOOLAK tool. Client component (it's all
  * user input), mounted into ToolShell's body slot by the tool page — the
  * shell already provides breadcrumbs, header, and SEO, so this component
  * is ONLY the tool.

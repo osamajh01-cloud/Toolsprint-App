@@ -10,7 +10,7 @@ import type { Dictionary } from "@/i18n/dictionaries/en";
 /**
  * components/marketing/Hero.tsx
  *
- * The homepage thesis: ToolSprint's real differentiator isn't the tool
+ * The homepage thesis: TOOLAK's real differentiator isn't the tool
  * count, it's that the work happens on your own machine. So the hero
  * leads with that promise rather than a generic value proposition, and
  * sits on the "workshop grid" — a faint engineering-graph wash (see
@@ -37,23 +37,23 @@ export function Hero({
         className="pointer-events-none absolute inset-0 workshop-grid opacity-60"
       />
 
-      <Container className="relative flex flex-col items-center gap-6 py-20 text-center sm:py-28">
+      <Container className="relative flex flex-col items-center gap-7 py-24 text-center sm:py-32">
         <Badge variant="primary" className="motion-safe:animate-fade-in">
           {t(dictionary.home.heroBadge, { count: tools.length })}
         </Badge>
 
         <h1
           id="hero-heading"
-          className="max-w-3xl text-balance text-4xl font-semibold leading-[1.08] tracking-tight sm:text-6xl motion-safe:animate-rise-in"
+          className="max-w-3xl text-balance text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-7xl motion-safe:animate-rise-in"
         >
           {dictionary.home.heroTitle}
         </h1>
 
-        <p className="max-w-xl text-balance text-lg leading-relaxed text-foreground-muted motion-safe:animate-rise-in">
+        <p className="max-w-xl text-balance text-lg leading-relaxed text-foreground-muted sm:text-xl motion-safe:animate-rise-in">
           {dictionary.home.heroSubtitle}
         </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-3 motion-safe:animate-rise-in">
+        <div className="mt-2 flex flex-wrap items-center justify-center gap-3 motion-safe:animate-rise-in">
           <Button href={localePath(locale, "/tools")} size="lg">
             {dictionary.home.heroCtaPrimary}
           </Button>

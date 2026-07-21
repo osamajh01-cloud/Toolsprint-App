@@ -82,7 +82,7 @@ export async function mergePdfBytes(
     }
   }
 
-  output.setProducer("ToolSprint PDF Merge");
+  output.setProducer("TOOLAK PDF Merge");
   output.setModificationDate(new Date());
 
   const bytes = await output.save();

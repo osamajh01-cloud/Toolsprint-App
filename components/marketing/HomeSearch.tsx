@@ -31,6 +31,8 @@ import type { Dictionary } from "@/i18n/dictionaries/en";
  */
 
 const RESULT_LIMIT = 6;
+// Persistence key kept stable across the rebrand (see ThemeScript) so a
+// visitor's recent searches survive the update; never shown in the UI.
 const RECENT_KEY = "toolsprint-recent-searches";
 const RECENT_LIMIT = 5;
 

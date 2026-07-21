@@ -28,7 +28,7 @@ export const en = {
   },
   home: {
     heroBadge: "{count} tools · nothing leaves your device",
-    heroTitle: "Save hours with powerful online tools.",
+    heroTitle: "Free online tools for everyone.",
     heroSubtitle:
       "Compress a PDF, shrink a photo, clean up text — every tool runs entirely in your browser. No uploads, no accounts, no waiting.",
     heroCtaPrimary: "Explore tools",
@@ -107,7 +107,7 @@ export const en = {
     about: "About",
     privacy: "Privacy policy",
     terms: "Terms of service",
-    rights: "© {year} ToolSprint. All rights reserved.",
+    rights: "© {year} TOOLAK. All rights reserved.",
     builtFor: "Built for speed. No sign-up required.",
   },
   comingSoon: {
@@ -117,7 +117,7 @@ export const en = {
       "We're putting the finishing touches on the first batch: text utilities, converters, and generators — all running entirely in your browser, with nothing to install and no sign-up.",
     pricingTitle: "Free while in early access",
     pricingBody:
-      "Every tool on ToolSprint is free to use right now — no account and no usage limits. Paid plans with pro features will arrive later, and everything that's free today stays free.",
+      "Every tool on TOOLAK is free to use right now — no account and no usage limits. Paid plans with pro features will arrive later, and everything that's free today stays free.",
     pricingCta: "Use the free tools",
     blogTitle: "Guides and walkthroughs, on the way",
     blogBody:
@@ -136,7 +136,7 @@ export const en = {
     backToTools: "Back to tools",
   },
   stats: {
-    heading: "ToolSprint at a glance",
+    heading: "TOOLAK at a glance",
     totalTools: "Tools",
     categories: "Categories",
     languages: "Languages",
@@ -156,7 +156,7 @@ export const en = {
       "Hand-picked utilities that show what the platform can do — start here if you're new.",
   },
   why: {
-    title: "Why ToolSprint",
+    title: "Why TOOLAK",
     description:
       "Built on one principle: your files are yours. Everything else follows from that.",
     privacyTitle: "Privacy first",
@@ -173,7 +173,7 @@ export const en = {
       "Once a tool page is loaded, most tools keep working without a connection — processing is local.",
     noUploadTitle: "No uploads, ever",
     noUploadBody:
-      "Where other sites upload your PDFs and photos to compress them, ToolSprint does the work in the browser itself.",
+      "Where other sites upload your PDFs and photos to compress them, TOOLAK does the work in the browser itself.",
   },
   faq: {
     title: "Frequently asked questions",
@@ -183,7 +183,7 @@ export const en = {
         a: "No. Every tool runs entirely in your browser using local processing. Your files never leave your device — there is no upload step at all.",
       },
       {
-        q: "Is ToolSprint really free?",
+        q: "Is TOOLAK really free?",
         a: "Yes. All tools are free to use with no account, no trial period, and no usage limits. Paid plans with extra features may arrive later, but what's free today stays free.",
       },
       {
@@ -191,7 +191,7 @@ export const en = {
         a: "No. Open any tool and start working immediately — there is no sign-up, login, or email required.",
       },
       {
-        q: "Which languages does ToolSprint support?",
+        q: "Which languages does TOOLAK support?",
         a: "The interface is available in English and Arabic (with full right-to-left support), and the catalog is built to add more languages over time.",
       },
       {
@@ -200,7 +200,7 @@ export const en = {
       },
       {
         q: "How is this different from other online tools?",
-        a: "Most online converters upload your files to their servers. ToolSprint processes everything locally in your browser, which makes it faster for most jobs and private by design.",
+        a: "Most online converters upload your files to their servers. TOOLAK processes everything locally in your browser, which makes it faster for most jobs and private by design.",
       },
     ],
   },
